@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <!--  mysql账户名  -->
+    <property name="connection.username">root</property>
+
+    <!--  mysql密码  -->
+    <property name="connection.password">1234</property>
+
+    <!--  mysql驱动  -->
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+
+    <!--  mysql连接URL  -->
+    <property name="connection.url">jdbc:mysql:///hibernate?useUnicode=true&amp;characterEncoding=UTF-8</property>
+
+    <!--  数据库方言  -->
+    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
+
+    <!--  显示sql语句  -->
+    <property name="show_sql">true</property>
+
+    <!--  格式化sql语句  -->
+    <property name="format_sql">true</property>
+
+    <!--  根据需要创建数据库  -->
+    <property name="hbm2ddl.auto">create</property>
+  </session-factory>
+</hibernate-configuration>
