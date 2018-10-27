@@ -1,18 +1,20 @@
-package com.sqlDesign.dao;
+package com.sqlDesign.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 /**
  * @author Mr.Wang
- * @version 2018/10/26
+ * @version 2018/10/27
  * @program hibernate
  * @description
  */
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "flow", schema = "hibernate", catalog = "")
+@Table(name = "flow", schema = "hibernate")
 public class FlowEntity {
     private int flowId;
     private Double localFreeNum;
@@ -20,7 +22,7 @@ public class FlowEntity {
     private Double localStandard;
     private Double otherStandard;
 
-    public FlowEntity(double localFreeNum, double otherFreeNum, double localStandard, double otherStandard){
+    public FlowEntity(double localFreeNum, double otherFreeNum, double localStandard, double otherStandard) {
         this.localFreeNum = localFreeNum;
         this.otherFreeNum = otherFreeNum;
         this.localStandard = localStandard;

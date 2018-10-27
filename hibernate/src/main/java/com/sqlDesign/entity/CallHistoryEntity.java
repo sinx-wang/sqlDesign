@@ -1,28 +1,48 @@
-package com.sqlDesign.dao;
+package com.sqlDesign.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
  * @author Mr.Wang
- * @version 2018/10/26
+ * @version 2018/10/27
  * @program hibernate
  * @description
  */
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "call_history", schema = "hibernate", catalog = "")
+@Table(name = "call_history", schema = "hibernate")
 public class CallHistoryEntity {
+    private int chid;
     private int cid;
+    private int pid;
     private Timestamp createdTime;
     private Timestamp endTime;
     private Double freeTime;
     private Double money;
+
+    public CallHistoryEntity(int cid, int pid, Timestamp createdTime, Timestamp endTime, double freeTime, double money) {
+        this.cid = cid;
+        this.pid = pid;
+        this.createdTime = createdTime;
+        this.endTime = endTime;
+        this.freeTime = freeTime;
+        this.money = money;
+    }
+
+    @Id
+    @Column(name = "chid")
+    public int getChid() {
+        return chid;
+    }
+
+    public void setChid(int chid) {
+        this.chid = chid;
+    }
 
     @Basic
     @Column(name = "cid")
@@ -32,6 +52,16 @@ public class CallHistoryEntity {
 
     public void setCid(int cid) {
         this.cid = cid;
+    }
+
+    @Basic
+    @Column(name = "pid")
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(int pid) {
+        this.pid = pid;
     }
 
     @Basic
@@ -81,7 +111,9 @@ public class CallHistoryEntity {
 
         CallHistoryEntity that = (CallHistoryEntity) o;
 
+        if (chid != that.chid) return false;
         if (cid != that.cid) return false;
+        if (pid != that.pid) return false;
         if (createdTime != null ? !createdTime.equals(that.createdTime) : that.createdTime != null) return false;
         if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
         if (freeTime != null ? !freeTime.equals(that.freeTime) : that.freeTime != null) return false;
@@ -92,7 +124,9 @@ public class CallHistoryEntity {
 
     @Override
     public int hashCode() {
-        int result = cid;
+        int result = chid;
+        result = 31 * result + cid;
+        result = 31 * result + pid;
         result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
         result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
         result = 31 * result + (freeTime != null ? freeTime.hashCode() : 0);

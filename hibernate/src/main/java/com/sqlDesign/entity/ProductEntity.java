@@ -1,18 +1,20 @@
-package com.sqlDesign.dao;
+package com.sqlDesign.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 /**
  * @author Mr.Wang
- * @version 2018/10/26
+ * @version 2018/10/27
  * @program hibernate
  * @description
  */
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "product", schema = "hibernate", catalog = "")
+@Table(name = "product", schema = "hibernate")
 public class ProductEntity {
     private int pid;
     private String pname;

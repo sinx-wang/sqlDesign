@@ -14,7 +14,7 @@
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 
     <!--  mysql连接URL  -->
-    <property name="connection.url">jdbc:mysql:///hibernate?useUnicode=true&amp;characterEncoding=UTF-8</property>
+    <property name="connection.url">jdbc:mysql://localhost:3306/hibernate</property>
 
     <!--  数据库方言  -->
     <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -27,5 +27,14 @@
 
     <!--  根据需要创建数据库  -->
     <property name="hbm2ddl.auto">create</property>
+    <mapping class="com.sqlDesign.entity.CallEntity"/>
+    <mapping class="com.sqlDesign.entity.CallHistoryEntity"/>
+    <mapping class="com.sqlDesign.entity.CustomerEntity"/>
+    <mapping class="com.sqlDesign.entity.FlowEntity"/>
+    <mapping class="com.sqlDesign.entity.FlowHistoryEntity"/>
+    <mapping class="com.sqlDesign.entity.ProductEntity"/>
+    <mapping class="com.sqlDesign.entity.SmsEntity"/>
+    <mapping class="com.sqlDesign.entity.SmsHistoryEntity"/>
+
   </session-factory>
 </hibernate-configuration>

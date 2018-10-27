@@ -1,26 +1,45 @@
-package com.sqlDesign.dao;
+package com.sqlDesign.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author Mr.Wang
- * @version 2018/10/26
+ * @version 2018/10/27
  * @program hibernate
  * @description
  */
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "sms_history", schema = "hibernate", catalog = "")
+@Table(name = "sms_history", schema = "hibernate")
 public class SmsHistoryEntity {
+    private int shid;
     private int cid;
-    private Integer allNum;
+    private int pid;
+    private int sendNum;
     private Integer freeNum;
     private Double money;
+
+    public SmsHistoryEntity(int cid, int pid, int sendNum, int freeNum, double money) {
+        this.cid = cid;
+        this.pid = pid;
+        this.sendNum = sendNum;
+        this.freeNum = freeNum;
+        this.money = money;
+    }
+
+    @Id
+    @Column(name = "shid")
+    public int getShid() {
+        return shid;
+    }
+
+    public void setShid(int shid) {
+        this.shid = shid;
+    }
 
     @Basic
     @Column(name = "cid")
@@ -33,13 +52,23 @@ public class SmsHistoryEntity {
     }
 
     @Basic
-    @Column(name = "all_num")
-    public Integer getAllNum() {
-        return allNum;
+    @Column(name = "pid")
+    public int getPid() {
+        return pid;
     }
 
-    public void setAllNum(Integer allNum) {
-        this.allNum = allNum;
+    public void setPid(int pid) {
+        this.pid = pid;
+    }
+
+    @Basic
+    @Column(name = "send_num")
+    public int getSendNum() {
+        return sendNum;
+    }
+
+    public void setSendNum(int sendNum) {
+        this.sendNum = sendNum;
     }
 
     @Basic
@@ -69,8 +98,10 @@ public class SmsHistoryEntity {
 
         SmsHistoryEntity that = (SmsHistoryEntity) o;
 
+        if (shid != that.shid) return false;
         if (cid != that.cid) return false;
-        if (allNum != null ? !allNum.equals(that.allNum) : that.allNum != null) return false;
+        if (pid != that.pid) return false;
+        if (sendNum != that.sendNum) return false;
         if (freeNum != null ? !freeNum.equals(that.freeNum) : that.freeNum != null) return false;
         if (money != null ? !money.equals(that.money) : that.money != null) return false;
 
@@ -79,8 +110,10 @@ public class SmsHistoryEntity {
 
     @Override
     public int hashCode() {
-        int result = cid;
-        result = 31 * result + (allNum != null ? allNum.hashCode() : 0);
+        int result = shid;
+        result = 31 * result + cid;
+        result = 31 * result + pid;
+        result = 31 * result + sendNum;
         result = 31 * result + (freeNum != null ? freeNum.hashCode() : 0);
         result = 31 * result + (money != null ? money.hashCode() : 0);
         return result;
