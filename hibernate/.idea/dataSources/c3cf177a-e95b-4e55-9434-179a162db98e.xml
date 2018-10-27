@@ -1167,66 +1167,79 @@
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="282" parent="238" name="PRIMARY">
+    <column id="282" parent="238" name="month">
+      <Position>5</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="283" parent="238" name="be_using">
+      <Position>6</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;1&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="284" parent="238" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>phid</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="283" parent="239" name="sms_id">
+    <column id="285" parent="239" name="sms_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="239" name="free_num">
+    <column id="286" parent="239" name="free_num">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="239" name="standard">
+    <column id="287" parent="239" name="standard">
       <Position>3</Position>
       <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="286" parent="239" name="PRIMARY">
+    <key id="288" parent="239" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>sms_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="287" parent="240" name="shid">
+    <column id="289" parent="240" name="shid">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="240" name="cid">
+    <column id="290" parent="240" name="cid">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="289" parent="240" name="free_num">
+    <column id="291" parent="240" name="free_num">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="290" parent="240" name="money">
+    <column id="292" parent="240" name="money">
       <Position>4</Position>
       <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="240" name="pid">
+    <column id="293" parent="240" name="pid">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="240" name="send_num">
+    <column id="294" parent="240" name="send_num">
       <Position>6</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="293" parent="240" name="PRIMARY">
+    <key id="295" parent="240" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>shid</ColNames>
       <Primary>1</Primary>

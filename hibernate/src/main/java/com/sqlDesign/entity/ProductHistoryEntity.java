@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 /**
  * @author Mr.Wang
- * @version 2018/10/27
+ * @version 2018/10/28
  * @program hibernate
  * @description
  */
@@ -20,11 +20,15 @@ public class ProductHistoryEntity {
     private int cid;
     private Integer pid;
     private Integer pNextId;
+    private int month;
+    private int beUsing;
 
-    public ProductHistoryEntity(int cid, int pid, int pNextId) {
+    public ProductHistoryEntity(int cid, int pid, int pNextId, int month, int beUsing) {
         this.cid = cid;
         this.pid = pid;
         this.pNextId = pNextId;
+        this.month = month;
+        this.beUsing = beUsing;
     }
 
     @Id
@@ -68,6 +72,26 @@ public class ProductHistoryEntity {
         this.pNextId = pNextId;
     }
 
+    @Basic
+    @Column(name = "month")
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    @Basic
+    @Column(name = "be_using", columnDefinition = "Integer default 1")
+    public int getBeUsing() {
+        return beUsing;
+    }
+
+    public void setBeUsing(int beUsing) {
+        this.beUsing = beUsing;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,6 +101,8 @@ public class ProductHistoryEntity {
 
         if (phid != that.phid) return false;
         if (cid != that.cid) return false;
+        if (month != that.month) return false;
+        if (beUsing != that.beUsing) return false;
         if (pid != null ? !pid.equals(that.pid) : that.pid != null) return false;
         if (pNextId != null ? !pNextId.equals(that.pNextId) : that.pNextId != null) return false;
 
@@ -89,6 +115,8 @@ public class ProductHistoryEntity {
         result = 31 * result + cid;
         result = 31 * result + (pid != null ? pid.hashCode() : 0);
         result = 31 * result + (pNextId != null ? pNextId.hashCode() : 0);
+        result = 31 * result + month;
+        result = 31 * result + beUsing;
         return result;
     }
 }

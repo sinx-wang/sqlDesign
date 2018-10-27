@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -36,6 +37,9 @@ public class SmsEntityTest {
     public void testSms() {
         SmsEntity smsEntity = new SmsEntity(100, 0.1);
         session.save(smsEntity);
+//        Calendar cal = Calendar.getInstance();
+//        int month = cal.get(Calendar.MONTH) + 1;
+//        System.out.println(month);
     }
 
     @Test
@@ -54,6 +58,40 @@ public class SmsEntityTest {
         for (ProductEntity productEntity:products) {
             System.out.println(productEntity.getPname());
         }
+    }
+
+    @Test
+    public void queryCustomer() {
+//        String relationSql = "select pNextId from ProductHistoryEntity where cid =: cid order by phid desc";
+//        Query query = session.createQuery(relationSql);
+//        query.setParameter("cid", 1);
+//        List<Integer> list = ((org.hibernate.query.Query) query).list();
+//
+//        Calendar cal = Calendar.getInstance();
+//        int month = cal.get(Calendar.MONTH) + 1;
+//        int pNextId = 0;
+//        pNextId = list.get(0);
+//        System.out.println(pNextId);
+
+//        Calendar cal = Calendar.getInstance();
+//        int month = cal.get(Calendar.MONTH) + 1;
+//        String relationSql = "update ProductHistoryEntity p set p.beUsing =: now where p.cid =: cid and p.pid =: pid and p.month =: month and p.beUsing =: beUsing";
+//        Query query = session.createQuery(relationSql);
+//        query.setParameter("now", 1);
+//        query.setParameter("cid", 1);
+//        query.setParameter("pid", 2);
+//        query.setParameter("month", month);
+//        query.setParameter("beUsing", 0);
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH) + 1;
+        String relationSql = "update ProductHistoryEntity p set p.pNextId =: now where p.cid =: cid and p.pNextId =: pid and p.month =: month";
+        Query query = session.createQuery(relationSql);
+        query.setParameter("now", 6);
+        query.setParameter("cid", 2);
+        query.setParameter("pid", 1);
+        query.setParameter("month", month);
+
+        query.executeUpdate();
     }
 
     @After

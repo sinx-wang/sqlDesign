@@ -91,17 +91,17 @@ public class AddData {
     @Test
     public void addProductHistoryEntity() {
         //取消套餐就是找到对应的cid和pid然后把cid设为1
-        ProductHistoryEntity productHistoryEntity0 = new ProductHistoryEntity(1, 2, 2);
+        ProductHistoryEntity productHistoryEntity0 = new ProductHistoryEntity(1, 2, 2, 10, 1);
         session.save(productHistoryEntity0);
-        ProductHistoryEntity productHistoryEntity1 = new ProductHistoryEntity(1, 3, 1);
+        ProductHistoryEntity productHistoryEntity1 = new ProductHistoryEntity(1, 3, 1, 10, 1);
         session.save(productHistoryEntity1);
-        ProductHistoryEntity productHistoryEntity2 = new ProductHistoryEntity(1, 4, 4);
+        ProductHistoryEntity productHistoryEntity2 = new ProductHistoryEntity(1, 4, 4, 10, 1);
         session.save(productHistoryEntity2);
-        ProductHistoryEntity productHistoryEntity3 = new ProductHistoryEntity(2, 6, 6);
+        ProductHistoryEntity productHistoryEntity3 = new ProductHistoryEntity(2, 6, 6, 10, 1);
         session.save(productHistoryEntity3);
-        ProductHistoryEntity productHistoryEntity4 = new ProductHistoryEntity(2, 4, 6);
+        ProductHistoryEntity productHistoryEntity4 = new ProductHistoryEntity(2, 4, 6, 10, 1);
         session.save(productHistoryEntity4);
-        ProductHistoryEntity productHistoryEntity5 = new ProductHistoryEntity(3, 6, 6);
+        ProductHistoryEntity productHistoryEntity5 = new ProductHistoryEntity(3, 6, 6, 10, 1);
         session.save(productHistoryEntity5);
     }
 
