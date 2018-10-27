@@ -33,6 +33,7 @@ public class ProductEntity {
 
     @Id
     @Column(name = "pid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getPid() {
         return pid;
     }

@@ -14,8 +14,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "call", schema = "hibernate")
+@Table(name = "call_standard", schema = "hibernate")
 public class CallEntity {
+
     private int callId;
     private Double freeTime;
     private Double standard;
@@ -27,6 +28,7 @@ public class CallEntity {
 
     @Id
     @Column(name = "call_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getCallId() {
         return callId;
     }

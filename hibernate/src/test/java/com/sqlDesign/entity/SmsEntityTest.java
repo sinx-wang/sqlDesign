@@ -8,6 +8,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * @author Mr.Wang
@@ -30,8 +34,26 @@ public class SmsEntityTest {
 
     @Test
     public void testSms() {
-        SmsEntity smsEntity = new SmsEntity( 1,0,0.1);
-        session.delete(smsEntity);
+        SmsEntity smsEntity = new SmsEntity(100, 0.1);
+        session.save(smsEntity);
+    }
+
+    @Test
+    public void queryPlan() {
+        String relationSql = "from ProductHistoryEntity where cid =: cid order by phid desc";
+        Query query = session.createQuery(relationSql);
+        query.setParameter("cid", 1);
+        List<ProductHistoryEntity> list = ((org.hibernate.query.Query) query).list();
+        int pid = 1;
+        ArrayList<ProductEntity> products = new ArrayList<>();
+        for(ProductHistoryEntity entity:list) {
+            pid = entity.getPid();
+            ProductEntity product = session.get(ProductEntity.class, pid);
+            products.add(product);
+        }
+        for (ProductEntity productEntity:products) {
+            System.out.println(productEntity.getPname());
+        }
     }
 
     @After

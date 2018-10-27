@@ -27,6 +27,7 @@ public class SmsEntity {
 
     @Id
     @Column(name = "sms_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getSmsId() {
         return smsId;
     }

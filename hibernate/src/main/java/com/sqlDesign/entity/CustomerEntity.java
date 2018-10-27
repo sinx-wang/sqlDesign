@@ -18,17 +18,14 @@ import javax.persistence.*;
 public class CustomerEntity {
     private int cid;
     private String cname;
-    private Integer pid;
-    private Integer pidNext;
 
-    public CustomerEntity(String cname, int pid, int pidNext) {
+    public CustomerEntity(String cname) {
         this.cname = cname;
-        this.pid = pid;
-        this.pidNext = pidNext;
     }
 
     @Id
     @Column(name = "cid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getCid() {
         return cid;
     }
@@ -47,26 +44,6 @@ public class CustomerEntity {
         this.cname = cname;
     }
 
-    @Basic
-    @Column(name = "pid")
-    public Integer getPid() {
-        return pid;
-    }
-
-    public void setPid(Integer pid) {
-        this.pid = pid;
-    }
-
-    @Basic
-    @Column(name = "pid_next")
-    public Integer getPidNext() {
-        return pidNext;
-    }
-
-    public void setPidNext(Integer pidNext) {
-        this.pidNext = pidNext;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,8 +53,6 @@ public class CustomerEntity {
 
         if (cid != that.cid) return false;
         if (cname != null ? !cname.equals(that.cname) : that.cname != null) return false;
-        if (pid != null ? !pid.equals(that.pid) : that.pid != null) return false;
-        if (pidNext != null ? !pidNext.equals(that.pidNext) : that.pidNext != null) return false;
 
         return true;
     }
@@ -86,8 +61,6 @@ public class CustomerEntity {
     public int hashCode() {
         int result = cid;
         result = 31 * result + (cname != null ? cname.hashCode() : 0);
-        result = 31 * result + (pid != null ? pid.hashCode() : 0);
-        result = 31 * result + (pidNext != null ? pidNext.hashCode() : 0);
         return result;
     }
 }

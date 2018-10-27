@@ -31,6 +31,7 @@ public class FlowEntity {
 
     @Id
     @Column(name = "flow_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getFlowId() {
         return flowId;
     }

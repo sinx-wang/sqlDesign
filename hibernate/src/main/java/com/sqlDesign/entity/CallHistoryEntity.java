@@ -36,6 +36,7 @@ public class CallHistoryEntity {
 
     @Id
     @Column(name = "chid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getChid() {
         return chid;
     }

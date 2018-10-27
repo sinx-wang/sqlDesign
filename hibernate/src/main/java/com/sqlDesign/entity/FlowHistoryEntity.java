@@ -38,6 +38,7 @@ public class FlowHistoryEntity {
 
     @Id
     @Column(name = "fhid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getFhid() {
         return fhid;
     }

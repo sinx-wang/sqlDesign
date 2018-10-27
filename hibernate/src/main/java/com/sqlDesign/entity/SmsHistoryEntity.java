@@ -33,6 +33,7 @@ public class SmsHistoryEntity {
 
     @Id
     @Column(name = "shid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getShid() {
         return shid;
     }
