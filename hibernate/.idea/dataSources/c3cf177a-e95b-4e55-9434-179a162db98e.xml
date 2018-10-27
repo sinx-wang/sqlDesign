@@ -925,24 +925,24 @@
       <Comment>通话资费标准</Comment>
     </table>
     <table id="233" parent="3" name="call_history">
-      <Comment>电话消费历史记录</Comment>
+      <Comment>通话消费历史记录</Comment>
     </table>
     <table id="234" parent="3" name="customer">
-      <Comment>客户信息</Comment>
+      <Engine>MyISAM</Engine>
     </table>
     <table id="235" parent="3" name="flow">
-      <Comment>流量资费标准</Comment>
+      <Engine>MyISAM</Engine>
     </table>
     <table id="236" parent="3" name="flow_history">
-      <Comment>流量历史记录</Comment>
+      <Engine>MyISAM</Engine>
     </table>
     <table id="237" parent="3" name="product">
-      <Comment>资费-组合</Comment>
+      <Engine>MyISAM</Engine>
     </table>
-    <table id="238" parent="3" name="sms">
-      <Comment>短信资费标准</Comment>
+    <table id="238" parent="3" name="sms"/>
+    <table id="239" parent="3" name="sms_history">
+      <Engine>MyISAM</Engine>
     </table>
-    <table id="239" parent="3" name="sms_history"/>
     <column id="240" parent="232" name="call_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
@@ -987,13 +987,11 @@
     <column id="247" parent="233" name="created_time">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="248" parent="233" name="end_time">
       <Position>5</Position>
       <DataType>datetime|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="249" parent="233" name="free_time">
@@ -1015,12 +1013,11 @@
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="253" parent="234" name="cname">
       <Position>2</Position>
-      <DataType>varchar(50)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="254" parent="234" name="pid">
@@ -1042,7 +1039,6 @@
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="258" parent="235" name="local_free_num">
@@ -1050,12 +1046,12 @@
       <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="259" parent="235" name="other_free_num">
+    <column id="259" parent="235" name="local_standard">
       <Position>3</Position>
       <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="260" parent="235" name="local_standard">
+    <column id="260" parent="235" name="other_free_num">
       <Position>4</Position>
       <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
@@ -1074,46 +1070,41 @@
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="264" parent="236" name="cid">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="265" parent="236" name="pid">
+    <column id="265" parent="236" name="consume_local">
       <Position>3</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="266" parent="236" name="consume_local">
+    <column id="266" parent="236" name="consume_other">
       <Position>4</Position>
       <DataType>double|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="267" parent="236" name="consume_other">
+    <column id="267" parent="236" name="free_local">
       <Position>5</Position>
       <DataType>double|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="268" parent="236" name="free_local">
+    <column id="268" parent="236" name="free_other">
       <Position>6</Position>
       <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="269" parent="236" name="free_other">
+    <column id="269" parent="236" name="money">
       <Position>7</Position>
       <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="270" parent="236" name="money">
+    <column id="270" parent="236" name="pid">
       <Position>8</Position>
-      <DataType>double|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <key id="271" parent="236" name="PRIMARY">
@@ -1125,12 +1116,11 @@
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="273" parent="237" name="pname">
+    <column id="273" parent="237" name="base">
       <Position>2</Position>
-      <DataType>varchar(50)|0s</DataType>
+      <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="274" parent="237" name="call_id">
@@ -1138,19 +1128,19 @@
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="275" parent="237" name="sms_id">
+    <column id="275" parent="237" name="flow_id">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="276" parent="237" name="flow_id">
+    <column id="276" parent="237" name="pname">
       <Position>5</Position>
-      <DataType>int(11)|0s</DataType>
+      <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="277" parent="237" name="base">
+    <column id="277" parent="237" name="sms_id">
       <Position>6</Position>
-      <DataType>double|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <key id="278" parent="237" name="PRIMARY">
@@ -1184,35 +1174,31 @@
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="284" parent="239" name="cid">
       <Position>2</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="285" parent="239" name="pid">
+    <column id="285" parent="239" name="free_num">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="239" name="send_num">
+    <column id="286" parent="239" name="money">
       <Position>4</Position>
-      <DataType>int(11)|0s</DataType>
-      <NotNull>1</NotNull>
+      <DataType>double|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="287" parent="239" name="free_num">
+    <column id="287" parent="239" name="pid">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="239" name="money">
+    <column id="288" parent="239" name="send_num">
       <Position>6</Position>
-      <DataType>double|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <key id="289" parent="239" name="PRIMARY">
