@@ -75,6 +75,7 @@ public class ProductServiceImpl implements ProductService {
     /**
      * 订购套餐立即生效
      * 默认创建用户的时候已经创建了基本资费
+     * TODO: 在新订套餐里把consume_all变为和原有的免费额度等同？——如果已经超过免费额度的话。money最好重新变为单次
      * @param cid 客户编号
      * @param pid 套餐编号
      * @return boolean

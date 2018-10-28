@@ -1,9 +1,21 @@
 package com.sqlDesign.serviceImpl;
 
+import com.sqlDesign.entity.*;
 import com.sqlDesign.service.UserService;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
+import javax.persistence.Query;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Mr.Wang
@@ -12,6 +24,28 @@ import java.util.ArrayList;
  * @description
  */
 public class UserServiceImpl implements UserService {
+
+    private SessionFactory sessionFactory;
+    private Session session;
+    private Transaction transaction;
+
+    private void init(boolean useTransaction) {
+        Configuration configuration = new Configuration().configure();
+        sessionFactory = configuration.buildSessionFactory();
+        session = sessionFactory.openSession();
+        if(useTransaction) {
+            transaction = session.beginTransaction();
+        }
+    }
+
+    private void end(boolean useTransaction) {
+        if (useTransaction) {
+            transaction.commit();
+        }
+        session.close();
+        sessionFactory.close();
+    }
+
     /**
      * 一次通话资费生成
      *
@@ -23,7 +57,71 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public double chargeOfCall(int cid, Timestamp createdTime, Timestamp endTime) {
-        return 0;
+        init(true);
+
+        //1. 检索用了什么含有通话的套餐，得出总免费时长
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        String relationSql = "select pid from ProductHistoryEntity where cid =: cid and month =: month and beUsing =: isUsing order by phid asc";
+        Query query = session.createQuery(relationSql);
+        query.setParameter("cid", cid);
+        query.setParameter("month", month);
+        query.setParameter("isUsing", 1);
+        List<Integer> planList = ((org.hibernate.query.Query) query).list();
+
+        double free_time_all = 0;
+        double consume_time_all = 0;
+        double standard = session.get(CallEntity.class, 1).getStandard();
+        for (Integer productId:planList) {
+            ProductEntity productEntity = session.get(ProductEntity.class, productId);
+            int callId = productEntity.getCallId();
+            if (callId != 1) {
+                CallEntity callEntity = session.get(CallEntity.class, callId);
+                free_time_all += callEntity.getFreeTime();
+                standard = callEntity.getStandard();
+            }
+        }
+        //2. 统计总通话时间
+        Date date = new Date();
+        String timeStr = String.valueOf(year) + "/" + String.valueOf(month) + "/1 0:0:0";
+        DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        try {
+            date = sdf.parse(timeStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Timestamp ts = new Timestamp(date.getTime());
+
+        String callTimeSql = "from CallHistoryEntity where cid =: cid and createdTime >=: monthStart order by createdTime desc";
+        Query query1 = session.createQuery(callTimeSql);
+        query1.setParameter("cid", cid);
+        query1.setParameter("monthStart", ts);
+        List<CallHistoryEntity> callList = ((org.hibernate.query.Query) query).list();
+
+        long from = createdTime.getTime();
+        long to = createdTime.getTime();
+        int minutes = (int)((to - from) / (1000 * 60));
+        if (callList.size() == 0) {
+            //这个月还没打过电话
+            consume_time_all += minutes;
+        } else {
+            //以前的all_time + 现在的
+            consume_time_all = callList.get(0).getAllTime() + minutes;
+        }
+        //3. money为超出时长计费
+        double surplus = free_time_all - consume_time_all;
+        double money = 0;
+        if (surplus < 0) {
+            //超出套餐部分
+            money = -surplus * standard;
+        }
+
+        CallHistoryEntity newHistory = new CallHistoryEntity(cid, createdTime, endTime, consume_time_all, money);
+        session.save(newHistory);
+
+        end(true);
+        return money;
     }
 
     /**
@@ -37,19 +135,169 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public double chargeOfFlow(int cid, double num, boolean isLocal) {
-        return 0;
+        init(true);
+
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH) + 1;
+        String relationSql = "select pid from ProductHistoryEntity where cid =: cid and month =: month and beUsing =: isUsing order by phid asc";
+        Query query = session.createQuery(relationSql);
+        query.setParameter("cid", cid);
+        query.setParameter("month", month);
+        query.setParameter("isUsing", 1);
+        List<Integer> planList = ((org.hibernate.query.Query) query).list();
+
+        double free_local_all = 0;
+        double consume_local_all;
+        double free_other_all = 0;
+        double consume_other_all;
+        double local_standard = session.get(FlowEntity.class, 1).getLocalStandard();
+        double other_standard = session.get(FlowEntity.class, 1).getOtherStandard();
+        for (Integer planId:planList) {
+            ProductEntity productEntity = session.get(ProductEntity.class, planId);
+            int flowId = productEntity.getFlowId();
+            if (flowId != 1) {
+                FlowEntity flowEntity = session.get(FlowEntity.class, flowId);
+                free_local_all += flowEntity.getLocalFreeNum();
+                free_other_all += flowEntity.getOtherFreeNum();
+                local_standard = flowEntity.getLocalStandard();
+                other_standard = flowEntity.getOtherStandard();
+            }
+        }
+
+        String flowNumSql = "from FlowHistoryEntity where cid =: cid and month =: month order by fhid desc";
+        Query query1 = session.createQuery(flowNumSql);
+        query1.setParameter("cid", cid);
+        query1.setParameter("month", month);
+        List<FlowHistoryEntity> flowList = ((org.hibernate.query.Query) query1).list();
+        double consume_local_once = isLocal ? num : 0;
+        double consume_other_once = isLocal ? 0 : num;
+        if (flowList.size() == 0) {
+            consume_local_all = consume_local_once;
+            consume_other_all = consume_other_once;
+        } else {
+            consume_local_all = flowList.get(0).getConsumeLocalAll() + consume_local_once;
+            consume_other_all = flowList.get(0).getConsumeOtherAll() + consume_other_once;
+        }
+
+        double surplus_local = free_local_all - consume_local_all;
+        double surplus_other = free_other_all - consume_other_all;
+        double money = 0;
+        if (surplus_local < 0) {
+            money = -surplus_local * local_standard;
+        }
+        if (surplus_other < 0) {
+            money += -surplus_other * other_standard;
+        }
+
+        FlowHistoryEntity flowHistoryEntity = new FlowHistoryEntity(cid, month, consume_local_all, consume_other_all, money);
+        session.save(flowHistoryEntity);
+
+        end(true);
+        return money;
     }
 
     /**
-     * 月账单
-     *
-     * @param cid   客户编号
-     * @param month 月份
+     * 一次短信资费生成
+     * @param cid 客户编号
+     * @param num 短信条数
      * @return double
      * @author Mr.Wang
      */
     @Override
-    public double chargeOfMonth(int cid, int month) {
-        return 0;
+    public double chargeOfSms(int cid, int num) {
+        init(true);
+
+        //订购了哪些套餐
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH) + 1;
+        String relationSql = "select pid from ProductHistoryEntity where cid =: cid and month =: month and beUsing =: isUsing order by phid asc";
+        Query query = session.createQuery(relationSql);
+        query.setParameter("cid", cid);
+        query.setParameter("month", month);
+        query.setParameter("isUsing", 1);
+        List<Integer> planList = ((org.hibernate.query.Query) query).list();
+
+        int free_num = 0;
+        int consume_all;
+        double standard = session.get(SmsEntity.class, 1).getStandard();
+        for (Integer planId:planList) {
+            ProductEntity productEntity = session.get(ProductEntity.class, planId);
+            int smsId = productEntity.getSmsId();
+            if (smsId != 1) {
+                SmsEntity smsEntity = session.get(SmsEntity.class, smsId);
+                free_num += smsEntity.getFreeNum();
+                standard = smsEntity.getStandard();
+            }
+        }
+
+        //查阅以往消费
+        //在新订套餐里把consume_all变为和原有的免费额度等同？——如果已经超过免费额度的话。money最好重新变为单次
+        String smsNumSql = "from SmsHistoryEntity where cid =: cid and month =: month order by shid desc";
+        Query query1 = session.createQuery(smsNumSql);
+        query1.setParameter("cid", cid);
+        query1.setParameter("month", month);
+        List<SmsHistoryEntity> smsList = ((org.hibernate.query.Query) query1).list();
+        if (smsList.size() == 0) {
+            consume_all = num;
+        } else {
+            consume_all = smsList.get(0).getSendNumAll() + num;
+        }
+        double surplus = free_num - consume_all;
+        double money = 0;
+        if (surplus < 0) {
+            money = -surplus * standard;
+        }
+
+        SmsHistoryEntity smsHistoryEntity = new SmsHistoryEntity(cid, month, consume_all, money);
+        session.save(smsHistoryEntity);
+
+        end(true);
+        return money;
+    }
+
+    /**
+     * 月账单
+     * 不含基准费
+     * @param cid   客户编号
+     * @param month 月份
+     * @return ArrayList<String>
+     * @author Mr.Wang
+     */
+    @Override
+    public ArrayList<String> chargeOfMonth(int cid, int month) {
+        init(false);
+        ArrayList<String> result = new ArrayList<>();
+
+        String callSql = "from CallHistoryEntity where cid =: cid and createdTime >=: monthStart order by createdTime desc";
+        Query query = session.createQuery(callSql);
+        List<CallHistoryEntity> calls = ((org.hibernate.query.Query) query).list();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        for (CallHistoryEntity call:calls) {
+            String callHistory = sdf.format(call.getCreatedTime()) + "->"
+                    + sdf.format(call.getEndTime()) + " "
+                    + String.valueOf(call.getMoney());
+            result.add(callHistory);
+        }
+
+        String smsSql = "from SmsHistoryEntity where cid =: cid and month =: month order by shid desc";
+        Query query1 = session.createQuery(smsSql);
+        List<SmsHistoryEntity> smss = ((org.hibernate.query.Query) query1).list();
+        double allSmsMoney = 0;
+        for (SmsHistoryEntity sms:smss) {
+            allSmsMoney += sms.getMoney();
+        }
+        result.add("messages: " + String.valueOf(allSmsMoney));
+
+        String flowSql = "from FlowHistoryEntity where cid =: cid and month =: month order by fhid desc";
+        Query query2 = session.createQuery(flowSql);
+        List<FlowHistoryEntity> flows = ((org.hibernate.query.Query) query2).list();
+        double allFlowMoney = 0;
+        for (FlowHistoryEntity flow:flows) {
+            allFlowMoney += flow.getMoney();
+        }
+        result.add("data: " + String.valueOf(allFlowMoney));
+
+        end(false);
+        return result;
     }
 }

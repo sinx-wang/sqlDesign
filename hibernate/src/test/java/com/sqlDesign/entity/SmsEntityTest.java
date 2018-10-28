@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.persistence.Query;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -35,11 +36,12 @@ public class SmsEntityTest {
 
     @Test
     public void testSms() {
-        SmsEntity smsEntity = new SmsEntity(100, 0.1);
-        session.save(smsEntity);
+//        SmsEntity smsEntity = new SmsEntity(100, 0.1);
+//        session.save(smsEntity);
 //        Calendar cal = Calendar.getInstance();
 //        int month = cal.get(Calendar.MONTH) + 1;
 //        System.out.println(month);
+
     }
 
     @Test

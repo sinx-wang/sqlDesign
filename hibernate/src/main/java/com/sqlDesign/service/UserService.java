@@ -32,11 +32,20 @@ public interface UserService {
     public double chargeOfFlow(int cid, double num, boolean isLocal);
 
     /**
+     * 一次短信资费生成
+     * @author Mr.Wang
+     * @param cid 客户编号
+     * @param num 短信条数
+     * @return double
+     */
+    public double chargeOfSms(int cid, int num);
+
+    /**
      * 月账单
      * @author Mr.Wang
      * @param cid 客户编号
      * @param month 月份
-     * @return double
+     * @return ArrayList<String>
      */
-    public double chargeOfMonth(int cid, int month);
+    public ArrayList<String> chargeOfMonth(int cid, int month);
 }

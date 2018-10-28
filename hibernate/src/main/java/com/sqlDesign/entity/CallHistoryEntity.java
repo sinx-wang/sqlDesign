@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 
 /**
  * @author Mr.Wang
- * @version 2018/10/27
+ * @version 2018/10/28
  * @program hibernate
  * @description
  */
@@ -19,18 +19,16 @@ import java.sql.Timestamp;
 public class CallHistoryEntity {
     private int chid;
     private int cid;
-    private int pid;
     private Timestamp createdTime;
     private Timestamp endTime;
-    private Double freeTime;
+    private double allTime;
     private Double money;
 
-    public CallHistoryEntity(int cid, int pid, Timestamp createdTime, Timestamp endTime, double freeTime, double money) {
+    public CallHistoryEntity(int cid, Timestamp createdTime, Timestamp endTime, double allTime, double money) {
         this.cid = cid;
-        this.pid = pid;
         this.createdTime = createdTime;
         this.endTime = endTime;
-        this.freeTime = freeTime;
+        this.allTime = allTime;
         this.money = money;
     }
 
@@ -56,16 +54,6 @@ public class CallHistoryEntity {
     }
 
     @Basic
-    @Column(name = "pid")
-    public int getPid() {
-        return pid;
-    }
-
-    public void setPid(int pid) {
-        this.pid = pid;
-    }
-
-    @Basic
     @Column(name = "created_time")
     public Timestamp getCreatedTime() {
         return createdTime;
@@ -86,13 +74,13 @@ public class CallHistoryEntity {
     }
 
     @Basic
-    @Column(name = "free_time")
-    public Double getFreeTime() {
-        return freeTime;
+    @Column(name = "all_time")
+    public double getAllTime() {
+        return allTime;
     }
 
-    public void setFreeTime(Double freeTime) {
-        this.freeTime = freeTime;
+    public void setAllTime(double allTime) {
+        this.allTime = allTime;
     }
 
     @Basic
@@ -114,10 +102,9 @@ public class CallHistoryEntity {
 
         if (chid != that.chid) return false;
         if (cid != that.cid) return false;
-        if (pid != that.pid) return false;
+        if (Double.compare(that.allTime, allTime) != 0) return false;
         if (createdTime != null ? !createdTime.equals(that.createdTime) : that.createdTime != null) return false;
         if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
-        if (freeTime != null ? !freeTime.equals(that.freeTime) : that.freeTime != null) return false;
         if (money != null ? !money.equals(that.money) : that.money != null) return false;
 
         return true;
@@ -125,12 +112,14 @@ public class CallHistoryEntity {
 
     @Override
     public int hashCode() {
-        int result = chid;
+        int result;
+        long temp;
+        result = chid;
         result = 31 * result + cid;
-        result = 31 * result + pid;
         result = 31 * result + (createdTime != null ? createdTime.hashCode() : 0);
         result = 31 * result + (endTime != null ? endTime.hashCode() : 0);
-        result = 31 * result + (freeTime != null ? freeTime.hashCode() : 0);
+        temp = Double.doubleToLongBits(allTime);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (money != null ? money.hashCode() : 0);
         return result;
     }

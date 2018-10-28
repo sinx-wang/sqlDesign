@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 /**
  * @author Mr.Wang
- * @version 2018/10/27
+ * @version 2018/10/28
  * @program hibernate
  * @description
  */
@@ -18,16 +18,14 @@ import javax.persistence.*;
 public class SmsHistoryEntity {
     private int shid;
     private int cid;
-    private int pid;
-    private int sendNum;
-    private Integer freeNum;
+    private int month;
+    private int sendNumAll;
     private Double money;
 
-    public SmsHistoryEntity(int cid, int pid, int sendNum, int freeNum, double money) {
+    public SmsHistoryEntity(int cid, int month, int sendNumAll, double money) {
         this.cid = cid;
-        this.pid = pid;
-        this.sendNum = sendNum;
-        this.freeNum = freeNum;
+        this.month = month;
+        this.sendNumAll = sendNumAll;
         this.money = money;
     }
 
@@ -53,33 +51,23 @@ public class SmsHistoryEntity {
     }
 
     @Basic
-    @Column(name = "pid")
-    public int getPid() {
-        return pid;
+    @Column(name = "month")
+    public int getMonth() {
+        return month;
     }
 
-    public void setPid(int pid) {
-        this.pid = pid;
-    }
-
-    @Basic
-    @Column(name = "send_num")
-    public int getSendNum() {
-        return sendNum;
-    }
-
-    public void setSendNum(int sendNum) {
-        this.sendNum = sendNum;
+    public void setMonth(int month) {
+        this.month = month;
     }
 
     @Basic
-    @Column(name = "free_num")
-    public Integer getFreeNum() {
-        return freeNum;
+    @Column(name = "send_num_all")
+    public int getSendNumAll() {
+        return sendNumAll;
     }
 
-    public void setFreeNum(Integer freeNum) {
-        this.freeNum = freeNum;
+    public void setSendNumAll(int sendNumAll) {
+        this.sendNumAll = sendNumAll;
     }
 
     @Basic
@@ -101,9 +89,8 @@ public class SmsHistoryEntity {
 
         if (shid != that.shid) return false;
         if (cid != that.cid) return false;
-        if (pid != that.pid) return false;
-        if (sendNum != that.sendNum) return false;
-        if (freeNum != null ? !freeNum.equals(that.freeNum) : that.freeNum != null) return false;
+        if (month != that.month) return false;
+        if (sendNumAll != that.sendNumAll) return false;
         if (money != null ? !money.equals(that.money) : that.money != null) return false;
 
         return true;
@@ -113,9 +100,8 @@ public class SmsHistoryEntity {
     public int hashCode() {
         int result = shid;
         result = 31 * result + cid;
-        result = 31 * result + pid;
-        result = 31 * result + sendNum;
-        result = 31 * result + (freeNum != null ? freeNum.hashCode() : 0);
+        result = 31 * result + month;
+        result = 31 * result + sendNumAll;
         result = 31 * result + (money != null ? money.hashCode() : 0);
         return result;
     }
