@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
         free_time_all = getFreeNum(planList, "call");
         //2. 统计总套餐内通话时间--通过一类“抹消超出套餐的时间”的记录来实现
         Date date = new Date();
-        String timeStr = String.valueOf(year) + "/" + String.valueOf(month) + "/1 0:0:0";
+        String timeStr = String.valueOf(year) + "/" + String.valueOf(month) + "/1 00:00:01";
         DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         try {
             date = sdf.parse(timeStr);
@@ -141,7 +141,7 @@ public class UserServiceImpl implements UserService {
         List<CallHistoryEntity> callList = ((org.hibernate.query.Query) query1).list();
 
         long from = createdTime.getTime();
-        long to = createdTime.getTime();
+        long to = endTime.getTime();
         int minutes = (int)((to - from) / (1000 * 60));
         if (callList.size() == 0) {
             //这个月还没打过电话

@@ -11,8 +11,6 @@ import org.junit.Test;
 /**
  * @author Mr.Wang
  * @version 2018/10/27
- * @program hibernate
- * @description
  */
 public class AddData {
     private SessionFactory sessionFactory;

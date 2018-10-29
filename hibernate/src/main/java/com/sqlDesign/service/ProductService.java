@@ -12,14 +12,32 @@ import java.util.ArrayList;
  */
 public interface ProductService {
 
-    /**套餐的查询（包括历史记录）
+    /**
+     * 所有套餐的查询（包括历史记录）
      * @author Mr.Wang
      * @param cid 客户编号
      * @return ArrayList<ProductEntity>
      */
-    public ArrayList<ProductEntity> queryProducts(int cid);
+    public ArrayList<ProductEntity> queryAllProducts(int cid);
 
-    /**订购套餐立即生效
+    /**
+     * 查询正在使用的套餐
+     * @author Mr.Wang
+     * @param cid 客户编号
+     * @return ArrayList<ProductEntity>
+     */
+    public ArrayList<ProductEntity> queryUsingProducts(int cid);
+
+    /**
+     * 查询下月的套餐
+     * @author Mr.Wang
+     * @param cid 客户编号
+     * @return ArrayList<ProductEntity>
+     */
+    public ArrayList<ProductEntity> queryNextProducts(int cid);
+
+    /**
+     * 订购套餐立即生效
      * @author Mr.Wang
      * @param cid 客户编号
      * @param pid 套餐编号
@@ -27,7 +45,8 @@ public interface ProductService {
      */
     public boolean orderProductNow(int cid, int pid);
 
-    /**订购套餐下月生效
+    /**
+     * 订购套餐下月生效
      * @author Mr.Wang
      * @param cid 客户编号
      * @param pid 套餐编号
@@ -35,7 +54,8 @@ public interface ProductService {
      */
     public boolean orderProductNext(int cid, int pid);
 
-    /**退订套餐立即生效
+    /**
+     * 退订套餐立即生效
      * @author Mr.Wang
      * @param cid 客户编号
      * @param pid 套餐编号
@@ -43,7 +63,8 @@ public interface ProductService {
      */
     public boolean cancelProductNow(int cid, int pid);
 
-    /**退订套餐下月生效
+    /**
+     * 退订套餐下月生效
      * @author Mr.Wang
      * @param cid 客户编号
      * @param pid 套餐编号

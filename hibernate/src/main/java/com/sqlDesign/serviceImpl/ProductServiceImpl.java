@@ -46,21 +46,7 @@ public class ProductServiceImpl implements ProductService {
         sessionFactory.close();
     }
 
-    /**
-     * 套餐的查询（包括历史记录）
-     * @param cid 客户编号
-     * @return ArrayList<ProductEntity>
-     * @author Mr.Wang
-     */
-    @Override
-    public ArrayList<ProductEntity> queryProducts(int cid) {
-        init(false);
-
-        //根据时间由近到远查询用户订购过的套餐
-        String relationSql = "from ProductHistoryEntity where cid =: cid order by phid desc";
-        Query query = session.createQuery(relationSql);
-        query.setParameter("cid", cid);
-        List<ProductHistoryEntity> list = ((org.hibernate.query.Query) query).list();
+    private ArrayList<ProductEntity> getProducts(List<ProductHistoryEntity> list) {
         ArrayList<ProductEntity> products = new ArrayList<>();
         if (list.size() > 0) {
             for(ProductHistoryEntity entity:list) {
@@ -72,6 +58,77 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
         }
+        return products;
+    }
+
+    /**
+     * 套餐的查询（包括历史记录）
+     * @param cid 客户编号
+     * @return ArrayList<ProductEntity>
+     * @author Mr.Wang
+     */
+    @Override
+    public ArrayList<ProductEntity> queryAllProducts(int cid) {
+        init(false);
+
+        //根据时间由近到远查询用户订购过的套餐
+        String relationSql = "from ProductHistoryEntity where cid =: cid order by phid desc";
+        Query query = session.createQuery(relationSql);
+        query.setParameter("cid", cid);
+        List<ProductHistoryEntity> list = ((org.hibernate.query.Query) query).list();
+        ArrayList<ProductEntity> products = getProducts(list);
+        end(false);
+        return products;
+    }
+
+    /**
+     * 查询正在使用的套餐
+     *
+     * @param cid 客户编号
+     * @return ArrayList<ProductEntity>
+     * @author Mr.Wang
+     */
+    @Override
+    public ArrayList<ProductEntity> queryUsingProducts(int cid) {
+        init(false);
+
+        String relationSql = "from ProductHistoryEntity where cid =: cid and beUsing = 1 order by phid desc";
+        Query query = session.createQuery(relationSql);
+        query.setParameter("cid", cid);
+        List<ProductHistoryEntity> list = ((org.hibernate.query.Query) query).list();
+        ArrayList<ProductEntity> products = getProducts(list);
+
+        end(false);
+        return products;
+    }
+
+    /**
+     * 查询下月的套餐
+     *
+     * @param cid 客户编号
+     * @return ArrayList<ProductEntity>
+     * @author Mr.Wang
+     */
+    @Override
+    public ArrayList<ProductEntity> queryNextProducts(int cid) {
+        init(false);
+
+        String relationSql = "from ProductHistoryEntity where cid =: cid and beUsing = 1 order by phid desc";
+        Query query = session.createQuery(relationSql);
+        query.setParameter("cid", cid);
+        List<ProductHistoryEntity> list = ((org.hibernate.query.Query) query).list();
+        ArrayList<ProductEntity> products = new ArrayList<>();
+        if (list.size() > 0) {
+            for(ProductHistoryEntity entity:list) {
+                int nextPid = entity.getpNextId();
+                //基本资费等于没有套餐
+                if (nextPid != 1) {
+                    ProductEntity product = session.get(ProductEntity.class, nextPid);
+                    products.add(product);
+                }
+            }
+        }
+
         end(false);
         return products;
     }
@@ -122,7 +179,7 @@ public class ProductServiceImpl implements ProductService {
         Calendar cal = Calendar.getInstance();
         //仍然是当前月份
         int month = cal.get(Calendar.MONTH) + 1;
-        ProductHistoryEntity productHistoryEntity = new ProductHistoryEntity(cid, 1, pNextId, month, 0);
+        ProductHistoryEntity productHistoryEntity = new ProductHistoryEntity(cid, 1, pNextId, month, 1);
         session.save(productHistoryEntity);
 
         end(true);
@@ -219,7 +276,7 @@ public class ProductServiceImpl implements ProductService {
             Query query1 = session.createQuery(callTimeSql);
             query1.setParameter("cid", cid);
             query1.setParameter("monthStart", ts);
-            List<CallHistoryEntity> callList = ((org.hibernate.query.Query) query).list();
+            List<CallHistoryEntity> callList = ((org.hibernate.query.Query) query1).list();
             if (callList.size() > 0) {
                 if (callList.get(0).getAllTime() > free_time_all) {
                     //新增记录
