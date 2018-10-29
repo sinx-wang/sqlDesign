@@ -21,6 +21,7 @@ public class FlowHistoryEntity {
     private int month;
     private double consumeLocalAll;
     private double consumeOtherAll;
+    //money是-1表示不是资费信息而是更新consume
     private Double money;
 
     public FlowHistoryEntity(int cid, int month, double consumeLocalAll, double consumeOtherAll, double money) {

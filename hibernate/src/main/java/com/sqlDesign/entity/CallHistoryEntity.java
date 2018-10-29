@@ -17,6 +17,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "call_history", schema = "hibernate")
 public class CallHistoryEntity {
+    //设计一类记录，create, end都是新订套餐时间，allTime为旧套餐满额
     private int chid;
     private int cid;
     private Timestamp createdTime;
@@ -30,6 +31,15 @@ public class CallHistoryEntity {
         this.endTime = endTime;
         this.allTime = allTime;
         this.money = money;
+    }
+
+    public CallHistoryEntity(int cid, double allTime) {
+        this.cid = cid;
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        this.createdTime = ts;
+        this.endTime = ts;
+        this.allTime = allTime;
+        this.money = 0.0;
     }
 
     @Id

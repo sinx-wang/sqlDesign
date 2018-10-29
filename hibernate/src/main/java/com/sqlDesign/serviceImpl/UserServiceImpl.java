@@ -46,6 +46,59 @@ public class UserServiceImpl implements UserService {
         sessionFactory.close();
     }
 
+    private List<Integer> getPlanList(int cid, int month, int isUsing) {
+        String relationSql = "select pid from ProductHistoryEntity where cid =: cid and month =: month and beUsing =: isUsing order by phid asc";
+        Query query = session.createQuery(relationSql);
+        query.setParameter("cid", cid);
+        query.setParameter("month", month);
+        query.setParameter("isUsing", isUsing);
+        return ((org.hibernate.query.Query) query).list();
+    }
+
+    private double getFreeNum(List<Integer> planList, String type) {
+        double free_num = 0;
+        switch (type) {
+            case "call":
+                for (Integer productId:planList) {
+                    ProductEntity productEntity = session.get(ProductEntity.class, productId);
+                    if (productEntity.getCallId() != 1) {
+                        CallEntity callEntity = session.get(CallEntity.class, productEntity.getCallId());
+                        free_num += callEntity.getFreeTime();
+                    }
+                }
+                break;
+            case "flow_local":
+                for (Integer planId:planList) {
+                    ProductEntity productEntity = session.get(ProductEntity.class, planId);
+                    int flowId = productEntity.getFlowId();
+                    if (flowId != 1) {
+                        FlowEntity flowEntity = session.get(FlowEntity.class, flowId);
+                        free_num += flowEntity.getLocalFreeNum();
+                    }
+                }
+                break;
+            case "flow_other":
+                for (Integer planId:planList) {
+                    ProductEntity productEntity = session.get(ProductEntity.class, planId);
+                    int flowId = productEntity.getFlowId();
+                    if (flowId != 1) {
+                        FlowEntity flowEntity = session.get(FlowEntity.class, flowId);
+                        free_num += flowEntity.getOtherFreeNum();
+                    }
+                }
+                break;
+            case "sms":
+                for (Integer planId:planList) {
+                    ProductEntity productEntity = session.get(ProductEntity.class, planId);
+                    if (productEntity.getSmsId() != 1) {
+                        SmsEntity smsEntity = session.get(SmsEntity.class, productEntity.getSmsId());
+                        free_num += smsEntity.getFreeNum();
+                    }
+                }
+                break;
+        }
+        return free_num;
+    }
     /**
      * 一次通话资费生成
      *
@@ -63,26 +116,14 @@ public class UserServiceImpl implements UserService {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH) + 1;
-        String relationSql = "select pid from ProductHistoryEntity where cid =: cid and month =: month and beUsing =: isUsing order by phid asc";
-        Query query = session.createQuery(relationSql);
-        query.setParameter("cid", cid);
-        query.setParameter("month", month);
-        query.setParameter("isUsing", 1);
-        List<Integer> planList = ((org.hibernate.query.Query) query).list();
 
-        double free_time_all = 0;
+        List<Integer> planList = getPlanList(cid, month, 1);
+
+        double free_time_all;
         double consume_time_all = 0;
         double standard = session.get(CallEntity.class, 1).getStandard();
-        for (Integer productId:planList) {
-            ProductEntity productEntity = session.get(ProductEntity.class, productId);
-            int callId = productEntity.getCallId();
-            if (callId != 1) {
-                CallEntity callEntity = session.get(CallEntity.class, callId);
-                free_time_all += callEntity.getFreeTime();
-                standard = callEntity.getStandard();
-            }
-        }
-        //2. 统计总通话时间
+        free_time_all = getFreeNum(planList, "call");
+        //2. 统计总套餐内通话时间--通过一类“抹消超出套餐的时间”的记录来实现
         Date date = new Date();
         String timeStr = String.valueOf(year) + "/" + String.valueOf(month) + "/1 0:0:0";
         DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -97,7 +138,7 @@ public class UserServiceImpl implements UserService {
         Query query1 = session.createQuery(callTimeSql);
         query1.setParameter("cid", cid);
         query1.setParameter("monthStart", ts);
-        List<CallHistoryEntity> callList = ((org.hibernate.query.Query) query).list();
+        List<CallHistoryEntity> callList = ((org.hibernate.query.Query) query1).list();
 
         long from = createdTime.getTime();
         long to = createdTime.getTime();
@@ -139,30 +180,16 @@ public class UserServiceImpl implements UserService {
 
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH) + 1;
-        String relationSql = "select pid from ProductHistoryEntity where cid =: cid and month =: month and beUsing =: isUsing order by phid asc";
-        Query query = session.createQuery(relationSql);
-        query.setParameter("cid", cid);
-        query.setParameter("month", month);
-        query.setParameter("isUsing", 1);
-        List<Integer> planList = ((org.hibernate.query.Query) query).list();
+        List<Integer> planList = getPlanList(cid, month, 1);
 
-        double free_local_all = 0;
+        double free_local_all;
         double consume_local_all;
-        double free_other_all = 0;
+        double free_other_all;
         double consume_other_all;
         double local_standard = session.get(FlowEntity.class, 1).getLocalStandard();
         double other_standard = session.get(FlowEntity.class, 1).getOtherStandard();
-        for (Integer planId:planList) {
-            ProductEntity productEntity = session.get(ProductEntity.class, planId);
-            int flowId = productEntity.getFlowId();
-            if (flowId != 1) {
-                FlowEntity flowEntity = session.get(FlowEntity.class, flowId);
-                free_local_all += flowEntity.getLocalFreeNum();
-                free_other_all += flowEntity.getOtherFreeNum();
-                local_standard = flowEntity.getLocalStandard();
-                other_standard = flowEntity.getOtherStandard();
-            }
-        }
+        free_local_all = getFreeNum(planList, "free_local");
+        free_other_all = getFreeNum(planList, "free_other");
 
         String flowNumSql = "from FlowHistoryEntity where cid =: cid and month =: month order by fhid desc";
         Query query1 = session.createQuery(flowNumSql);
@@ -210,25 +237,12 @@ public class UserServiceImpl implements UserService {
         //订购了哪些套餐
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH) + 1;
-        String relationSql = "select pid from ProductHistoryEntity where cid =: cid and month =: month and beUsing =: isUsing order by phid asc";
-        Query query = session.createQuery(relationSql);
-        query.setParameter("cid", cid);
-        query.setParameter("month", month);
-        query.setParameter("isUsing", 1);
-        List<Integer> planList = ((org.hibernate.query.Query) query).list();
+        List<Integer> planList = getPlanList(cid, month, 1);
 
-        int free_num = 0;
+        int free_num;
         int consume_all;
         double standard = session.get(SmsEntity.class, 1).getStandard();
-        for (Integer planId:planList) {
-            ProductEntity productEntity = session.get(ProductEntity.class, planId);
-            int smsId = productEntity.getSmsId();
-            if (smsId != 1) {
-                SmsEntity smsEntity = session.get(SmsEntity.class, smsId);
-                free_num += smsEntity.getFreeNum();
-                standard = smsEntity.getStandard();
-            }
-        }
+        free_num = (int)getFreeNum(planList, "sms");
 
         //查阅以往消费
         //在新订套餐里把consume_all变为和原有的免费额度等同？——如果已经超过免费额度的话。money最好重新变为单次
@@ -267,16 +281,25 @@ public class UserServiceImpl implements UserService {
     public ArrayList<String> chargeOfMonth(int cid, int month) {
         init(false);
         ArrayList<String> result = new ArrayList<>();
+        List<Integer> planList = getPlanList(cid, month, 1);
+        for (Integer pid:planList) {
+            ProductEntity productEntity = session.get(ProductEntity.class, pid);
+            String planStr = productEntity.getPname() + " " + String.valueOf(productEntity.getBase());
+            result.add(planStr);
+        }
 
         String callSql = "from CallHistoryEntity where cid =: cid and createdTime >=: monthStart order by createdTime desc";
         Query query = session.createQuery(callSql);
         List<CallHistoryEntity> calls = ((org.hibernate.query.Query) query).list();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         for (CallHistoryEntity call:calls) {
-            String callHistory = sdf.format(call.getCreatedTime()) + "->"
-                    + sdf.format(call.getEndTime()) + " "
-                    + String.valueOf(call.getMoney());
-            result.add(callHistory);
+            //去掉新订购套餐记录
+            if (!call.getCreatedTime().equals(call.getEndTime())) {
+                String callHistory = sdf.format(call.getCreatedTime()) + "->"
+                        + sdf.format(call.getEndTime()) + " "
+                        + String.valueOf(call.getMoney());
+                result.add(callHistory);
+            }
         }
 
         String smsSql = "from SmsHistoryEntity where cid =: cid and month =: month order by shid desc";
@@ -284,7 +307,9 @@ public class UserServiceImpl implements UserService {
         List<SmsHistoryEntity> smss = ((org.hibernate.query.Query) query1).list();
         double allSmsMoney = 0;
         for (SmsHistoryEntity sms:smss) {
-            allSmsMoney += sms.getMoney();
+            if (sms.getMoney() > 0) {
+                allSmsMoney += sms.getMoney();
+            }
         }
         result.add("messages: " + String.valueOf(allSmsMoney));
 
@@ -293,10 +318,11 @@ public class UserServiceImpl implements UserService {
         List<FlowHistoryEntity> flows = ((org.hibernate.query.Query) query2).list();
         double allFlowMoney = 0;
         for (FlowHistoryEntity flow:flows) {
-            allFlowMoney += flow.getMoney();
+            if (flow.getMoney() > 0) {
+                allFlowMoney += flow.getMoney();
+            }
         }
         result.add("data: " + String.valueOf(allFlowMoney));
-
         end(false);
         return result;
     }
