@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed81753a-3c4a-48b1-beb4-487b8b3522f5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/c3cf177a-e95b-4e55-9434-179a162db98e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/c3cf177a-e95b-4e55-9434-179a162db98e.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sqlDesign/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sqlDesign/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sqlDesign/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sqlDesign/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/CallHistoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/CallHistoryEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/FlowHistoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/FlowHistoryEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/SmsHistoryEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/SmsHistoryEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/sqlDesign/serviceImpl/ProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sqlDesign/serviceImpl/ProductServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/sqlDesign/serviceImpl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sqlDesign/serviceImpl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/sqlDesign/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/sqlDesign/MainTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/sqlDesign/service/ProductServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/sqlDesign/service/ProductServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/com/sqlDesign/service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/sqlDesign/service/UserServiceTest.java" afterDir="false" />
     </list>
@@ -144,17 +141,17 @@
         <counts>
           <entry key="cell" value="24" />
           <entry key="dummy" value="4" />
-          <entry key="java" value="16092" />
-          <entry key="sql" value="132" />
-          <entry key="txt" value="99" />
+          <entry key="java" value="16823" />
+          <entry key="sql" value="138" />
+          <entry key="txt" value="115" />
           <entry key="xml" value="289" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="16092" />
-          <entry key="PLAIN_TEXT" value="103" />
-          <entry key="SQL" value="132" />
+          <entry key="JAVA" value="16823" />
+          <entry key="PLAIN_TEXT" value="119" />
+          <entry key="SQL" value="138" />
           <entry key="Scratch" value="24" />
           <entry key="XML" value="289" />
         </counts>
@@ -164,8 +161,8 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="1" />
-          <entry key="Database Element" value="82" />
-          <entry key="JAVA" value="138" />
+          <entry key="Database Element" value="83" />
+          <entry key="JAVA" value="145" />
           <entry key="SQL" value="1" />
           <entry key="Scratch" value="2" />
           <entry key="XML" value="14" />
@@ -179,9 +176,9 @@
           <entry key="class" value="1" />
           <entry key="customer" value="4" />
           <entry key="flow" value="5" />
-          <entry key="flow_history" value="4" />
+          <entry key="flow_history" value="5" />
           <entry key="history" value="2" />
-          <entry key="java" value="138" />
+          <entry key="java" value="145" />
           <entry key="product" value="19" />
           <entry key="product_call_standard_call_id_fk" value="1" />
           <entry key="product_history" value="19" />
@@ -197,26 +194,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/com/sqlDesign/serviceImpl/UserServiceImpl.java">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/sqlDesign/serviceImpl/ProductServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1040">
-              <caret line="122" column="24" lean-forward="true" selection-start-line="122" selection-start-column="24" selection-end-line="122" selection-end-column="24" />
+            <state relative-caret-position="272">
+              <caret line="396" column="105" selection-start-line="396" selection-start-column="105" selection-end-line="396" selection-end-column="105" />
               <folding>
-                <element signature="method#init#0;class#UserServiceImpl#0" />
-                <element signature="method#end#0;class#UserServiceImpl#0" />
-                <element signature="method#getPlanList#0;class#UserServiceImpl#0" />
-                <element signature="method#getFreeNum#0;class#UserServiceImpl#0" />
+                <element signature="method#init#0;class#ProductServiceImpl#0" />
+                <element signature="method#end#0;class#ProductServiceImpl#0" />
+                <element signature="method#getProducts#0;class#ProductServiceImpl#0" />
+                <element signature="method#changeConsumeOfCall#0;class#ProductServiceImpl#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/sqlDesign/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="113" column="53" lean-forward="true" selection-start-line="113" selection-start-column="53" selection-end-line="113" selection-end-column="53" />
+            <state relative-caret-position="286">
+              <caret line="99" column="36" selection-start-line="99" selection-start-column="36" selection-end-line="99" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -224,8 +221,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/java/com/sqlDesign/service/UserServiceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="35" column="69" lean-forward="true" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="69" />
+            <state relative-caret-position="-794">
+              <caret line="73" column="58" lean-forward="true" selection-start-line="73" selection-start-column="58" selection-end-line="73" selection-end-column="58" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -234,10 +231,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/com/sqlDesign/entity/AddData.java">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/sqlDesign/service/ProductServiceTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="702">
-              <caret line="87" selection-start-line="87" selection-end-line="87" />
+            <state relative-caret-position="768">
+              <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -256,6 +256,7 @@
     <findStrings>
       <find>.class</find>
       <find>save</find>
+      <find>fee of flow</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -291,17 +292,17 @@
         <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/SmsEntity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/ProductHistoryEntity.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/sqlDesign/entity/SmsEntityTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/SmsHistoryEntity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/service/UserService.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/sqlDesign/entity/AddData.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/service/ProductService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/Main.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/sqlDesign/service/ProductServiceTest.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/sqlDesign/service/UserServiceTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/CallHistoryEntity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/FlowHistoryEntity.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/sqlDesign/entity/AddData.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/sqlDesign/service/UserServiceTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/sqlDesign/service/ProductServiceTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/serviceImpl/ProductServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/service/ProductService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/SmsHistoryEntity.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/serviceImpl/UserServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/sqlDesign/serviceImpl/ProductServiceImpl.java" />
       </list>
     </option>
   </component>
@@ -329,7 +330,7 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-20" />
     <option name="width" value="2558" />
     <option name="height" value="1774" />
@@ -463,7 +464,7 @@
     <property name="JPA.DatabaseSchemaImportDialog" value="c3cf177a-e95b-4e55-9434-179a162db98e" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540902739711" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1540909072549" />
     <property name="database.console.LAST_STATE" value="false" />
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/com/sqlDesign/entity" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -493,23 +494,9 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.UserServiceTest.testChargeOfSms">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.sqlDesign.Main" />
-      <module name="hibernate" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.sqlDesign.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -520,24 +507,39 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProductServiceTest.testGetAll" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="AddData" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="hibernate" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.sqlDesign.service.*" />
+          <option name="PATTERN" value="com.sqlDesign.entity.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.sqlDesign.service" />
-      <option name="MAIN_CLASS_NAME" value="com.sqlDesign.service.ProductServiceTest" />
-      <option name="METHOD_NAME" value="testGetAll" />
+      <option name="PACKAGE_NAME" value="com.sqlDesign.entity" />
+      <option name="MAIN_CLASS_NAME" value="com.sqlDesign.entity.AddData" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AddData.addCustomerEntity" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="hibernate" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.sqlDesign.entity.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.sqlDesign.entity" />
+      <option name="MAIN_CLASS_NAME" value="com.sqlDesign.entity.AddData" />
+      <option name="METHOD_NAME" value="addCustomerEntity" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceTest.testChargeOfMonth" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServiceTest.testChargeOfCall" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="hibernate" />
       <extension name="coverage">
         <pattern>
@@ -547,14 +549,14 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.sqlDesign.service" />
       <option name="MAIN_CLASS_NAME" value="com.sqlDesign.service.UserServiceTest" />
-      <option name="METHOD_NAME" value="testChargeOfMonth" />
+      <option name="METHOD_NAME" value="testChargeOfCall" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceTest.testOrderNewCall" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServiceTest.testChargeOfFlow" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="hibernate" />
       <extension name="coverage">
         <pattern>
@@ -564,14 +566,14 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.sqlDesign.service" />
       <option name="MAIN_CLASS_NAME" value="com.sqlDesign.service.UserServiceTest" />
-      <option name="METHOD_NAME" value="testOrderNewCall" />
+      <option name="METHOD_NAME" value="testChargeOfFlow" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserServiceTest.testOrderNewSms" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserServiceTest.testChargeOfSms" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="hibernate" />
       <extension name="coverage">
         <pattern>
@@ -581,7 +583,7 @@
       </extension>
       <option name="PACKAGE_NAME" value="com.sqlDesign.service" />
       <option name="MAIN_CLASS_NAME" value="com.sqlDesign.service.UserServiceTest" />
-      <option name="METHOD_NAME" value="testOrderNewSms" />
+      <option name="METHOD_NAME" value="testChargeOfSms" />
       <option name="TEST_OBJECT" value="method" />
       <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
@@ -603,19 +605,19 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="JUnit.UserServiceTest.testOrderNewSms" />
-      <item itemvalue="JUnit.UserServiceTest.testOrderNewCall" />
-      <item itemvalue="JUnit.UserServiceTest.testChargeOfMonth" />
-      <item itemvalue="Application.Main" />
-      <item itemvalue="JUnit.ProductServiceTest.testGetAll" />
+      <item itemvalue="JUnit.UserServiceTest.testChargeOfCall" />
+      <item itemvalue="JUnit.UserServiceTest.testChargeOfFlow" />
+      <item itemvalue="JUnit.AddData" />
+      <item itemvalue="JUnit.AddData.addCustomerEntity" />
+      <item itemvalue="JUnit.UserServiceTest.testChargeOfSms" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.ProductServiceTest.testGetAll" />
-        <item itemvalue="JUnit.UserServiceTest.testChargeOfMonth" />
-        <item itemvalue="JUnit.UserServiceTest.testOrderNewCall" />
-        <item itemvalue="JUnit.UserServiceTest.testOrderNewSms" />
+        <item itemvalue="JUnit.UserServiceTest.testChargeOfSms" />
+        <item itemvalue="JUnit.UserServiceTest.testChargeOfFlow" />
+        <item itemvalue="JUnit.AddData.addCustomerEntity" />
+        <item itemvalue="JUnit.AddData" />
+        <item itemvalue="JUnit.UserServiceTest.testChargeOfCall" />
       </list>
     </recent_temporary>
   </component>
@@ -637,50 +639,50 @@
       <workItem from="1540790650552" duration="12959000" />
       <workItem from="1540804364228" duration="1221000" />
       <workItem from="1540814005002" duration="12648000" />
-      <workItem from="1540860723589" duration="18210000" />
+      <workItem from="1540860723589" duration="25128000" />
     </task>
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="UserServiceTest_testChargeOfMonth - 2018.10.30 at 09h 49m 34s.xml">
-      <configuration name="UserServiceTest.testChargeOfMonth" configurationId="JUnit" />
+    <history-entry file="ProductServiceTest_testOrderProductNow - 2018.10.30 at 20h 53m 36s.xml">
+      <configuration name="ProductServiceTest.testOrderProductNow" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserServiceTest_testChargeOfMonth - 2018.10.30 at 09h 54m 49s.xml">
-      <configuration name="UserServiceTest.testChargeOfMonth" configurationId="JUnit" />
+    <history-entry file="ProductServiceTest_testOrderProductNext - 2018.10.30 at 21h 00m 32s.xml">
+      <configuration name="ProductServiceTest.testOrderProductNext" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserServiceTest_testChargeOfMonth - 2018.10.30 at 10h 02m 11s.xml">
-      <configuration name="UserServiceTest.testChargeOfMonth" configurationId="JUnit" />
+    <history-entry file="ProductServiceTest_testCancelProductNow - 2018.10.30 at 21h 03m 34s.xml">
+      <configuration name="ProductServiceTest.testCancelProductNow" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserServiceTest_testChargeOfMonth - 2018.10.30 at 10h 03m 50s.xml">
-      <configuration name="UserServiceTest.testChargeOfMonth" configurationId="JUnit" />
+    <history-entry file="ProductServiceTest_testCancelProductNext - 2018.10.30 at 21h 06m 39s.xml">
+      <configuration name="ProductServiceTest.testCancelProductNext" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserServiceTest_testChargeOfMonth - 2018.10.30 at 10h 08m 22s.xml">
-      <configuration name="UserServiceTest.testChargeOfMonth" configurationId="JUnit" />
+    <history-entry file="UserServiceTest_testChargeOfCall - 2018.10.30 at 21h 10m 47s.xml">
+      <configuration name="UserServiceTest.testChargeOfCall" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserServiceTest_testChargeOfMonth - 2018.10.30 at 10h 08m 50s.xml">
-      <configuration name="UserServiceTest.testChargeOfMonth" configurationId="JUnit" />
+    <history-entry file="UserServiceTest_testChargeOfFlow - 2018.10.30 at 21h 13m 36s.xml">
+      <configuration name="UserServiceTest.testChargeOfFlow" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserServiceTest_testChargeOfMonth - 2018.10.30 at 10h 09m 14s.xml">
-      <configuration name="UserServiceTest.testChargeOfMonth" configurationId="JUnit" />
+    <history-entry file="AddData - 2018.10.30 at 22h 07m 14s.xml">
+      <configuration name="AddData" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="UserServiceTest_testChargeOfMonth - 2018.10.30 at 11h 10m 09s.xml">
-      <configuration name="UserServiceTest.testChargeOfMonth" configurationId="JUnit" />
+    <history-entry file="AddData_addCustomerEntity - 2018.10.30 at 22h 11m 33s.xml">
+      <configuration name="AddData.addCustomerEntity" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ProductServiceTest_testGetAll - 2018.10.30 at 19h 31m 24s.xml">
-      <configuration name="ProductServiceTest.testGetAll" configurationId="JUnit" />
+    <history-entry file="UserServiceTest_testChargeOfFlow - 2018.10.30 at 22h 12m 15s.xml">
+      <configuration name="UserServiceTest.testChargeOfFlow" configurationId="JUnit" />
     </history-entry>
-    <history-entry file="ProductServiceTest_testGetAll - 2018.10.30 at 19h 32m 37s.xml">
-      <configuration name="ProductServiceTest.testGetAll" configurationId="JUnit" />
+    <history-entry file="UserServiceTest_testChargeOfSms - 2018.10.30 at 22h 13m 51s.xml">
+      <configuration name="UserServiceTest.testChargeOfSms" configurationId="JUnit" />
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="106547000" />
+    <option name="totallyTimeSpent" value="113465000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1513" height="973" extended-state="6" />
+    <frame x="-6" y="-6" width="1513" height="973" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5368043" weight="0.20481099" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5332068" visible="true" weight="0.20481099" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Capture Tool" order="2" />
       <window_info id="Designer" order="3" />
@@ -688,7 +690,7 @@
       <window_info id="Image Layers" order="5" />
       <window_info id="Web" order="6" side_tool="true" />
       <window_info id="Favorites" order="7" side_tool="true" />
-      <window_info id="Persistence" order="8" sideWeight="0.46319568" side_tool="true" weight="0.20481099" />
+      <window_info id="Persistence" order="8" sideWeight="0.46679318" side_tool="true" visible="true" weight="0.20481099" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32889965" />
       <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49965635" visible="true" weight="0.36275697" />
@@ -720,47 +722,6 @@
       <window_info anchor="right" id="Mongo Explorer" order="11" weight="0.3298969" />
       <window_info anchor="right" id="CDI" order="12" />
     </layout>
-    <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5368043" visible="true" weight="0.20481099" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Capture Tool" order="2" />
-      <window_info id="Designer" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Image Layers" order="5" />
-      <window_info id="Web" order="6" side_tool="true" />
-      <window_info id="Favorites" order="7" side_tool="true" />
-      <window_info id="Persistence" order="8" sideWeight="0.46319568" side_tool="true" weight="0.20481099" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32889965" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49965635" weight="0.36275697" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39903265" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5003436" side_tool="true" weight="0.30592504" />
-      <window_info anchor="bottom" id="Build" order="8" />
-      <window_info anchor="bottom" id="Java Enterprise" order="9" />
-      <window_info anchor="bottom" id="Version Control" order="10" weight="0.32930845" />
-      <window_info anchor="bottom" id="Spring" order="11" />
-      <window_info anchor="bottom" id="Terminal" order="12" weight="0.23990773" />
-      <window_info anchor="bottom" id="Application Servers" order="13" weight="0.28767878" />
-      <window_info anchor="bottom" id="Messages" order="14" weight="0.32769045" />
-      <window_info anchor="bottom" id="Database Changes" order="15" weight="0.32889965" />
-      <window_info anchor="bottom" id="Database Console" order="16" weight="0.3298731" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Maven Projects" order="4" weight="0.3298969" />
-      <window_info anchor="right" id="Database" order="5" weight="0.185567" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="right" id="Capture Analysis" order="7" />
-      <window_info anchor="right" id="Bean Validation" order="8" />
-      <window_info anchor="right" id="Gradle" order="9" />
-      <window_info anchor="right" id="Theme Preview" order="10" />
-      <window_info anchor="right" id="Mongo Explorer" order="11" weight="0.3298969" />
-      <window_info anchor="right" id="CDI" order="12" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -862,16 +823,6 @@
     </entry>
     <entry file="das://c3cf177a-e95b-4e55-9434-179a162db98e/schema/hibernate/table/flow" />
     <entry file="das://c3cf177a-e95b-4e55-9434-179a162db98e/schema/hibernate/table/sms" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/SmsHistoryEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="33" column="54" selection-start-line="33" selection-start-column="54" selection-end-line="33" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/sqlDesign/entity/SmsEntityTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -903,23 +854,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/CallHistoryEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="260">
-          <caret line="20" column="21" lean-forward="true" selection-start-line="20" selection-start-column="21" selection-end-line="20" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/FlowHistoryEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="21" column="35" lean-forward="true" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/junit/junit/4.12/junit-4.12-sources.jar!/org/junit/runners/model/FrameworkMethod.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
@@ -927,13 +861,6 @@
           <folding>
             <element signature="e#1657#1658#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://c3cf177a-e95b-4e55-9434-179a162db98e/schema/hibernate/table/flow_history">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -975,21 +902,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/sqlDesign/serviceImpl/ProductServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="237" column="38" selection-start-line="237" selection-start-column="38" selection-end-line="237" selection-end-column="38" />
-          <folding>
-            <element signature="method#init#0;class#ProductServiceImpl#0" />
-            <element signature="method#end#0;class#ProductServiceImpl#0" />
-            <element signature="method#getProducts#0;class#ProductServiceImpl#0" />
-            <element signature="method#changeConsumeOfCall#0;class#ProductServiceImpl#0" />
-            <element signature="method#changeConsumeOfFlow#0;class#ProductServiceImpl#0" />
-            <element signature="method#changeConsumeOfSms#0;class#ProductServiceImpl#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="das://c3cf177a-e95b-4e55-9434-179a162db98e/schema/hibernate/table/product_history">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1004,10 +916,43 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/CallHistoryEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2522">
+          <caret line="137" column="86" selection-start-line="137" selection-start-column="86" selection-end-line="137" selection-end-column="86" />
+          <folding>
+            <element signature="e#3630#3631#0" expanded="true" />
+            <element signature="e#3666#3667#0" expanded="true" />
+            <element signature="e#3724#3725#0" expanded="true" />
+            <element signature="e#3774#3775#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/FlowHistoryEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="650">
+          <caret line="127" column="69" selection-start-line="127" selection-start-column="69" selection-end-line="127" selection-end-column="69" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sqlDesign/entity/SmsHistoryEntity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2288">
+          <caret line="108" column="69" selection-start-line="108" selection-start-column="69" selection-end-line="108" selection-end-column="69" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sqlDesign/serviceImpl/UserServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1040">
-          <caret line="122" column="24" lean-forward="true" selection-start-line="122" selection-start-column="24" selection-end-line="122" selection-end-column="24" />
+        <state relative-caret-position="2158">
+          <caret line="371" column="44" selection-start-line="371" selection-start-column="44" selection-end-line="371" selection-end-column="44" />
           <folding>
             <element signature="method#init#0;class#UserServiceImpl#0" />
             <element signature="method#end#0;class#UserServiceImpl#0" />
@@ -1017,27 +962,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="das://c3cf177a-e95b-4e55-9434-179a162db98e/schema/hibernate/table/flow_history">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/sqlDesign/entity/AddData.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="81" selection-start-line="81" selection-end-line="81" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/sqlDesign/service/ProductServiceTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="20" column="42" lean-forward="true" selection-start-line="20" selection-start-column="42" selection-end-line="20" selection-end-column="42" />
+        <state relative-caret-position="768">
+          <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/com/sqlDesign/entity/AddData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="87" selection-start-line="87" selection-end-line="87" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/com/sqlDesign/service/UserServiceTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="35" column="69" lean-forward="true" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="69" />
+        <state relative-caret-position="-794">
+          <caret line="73" column="58" lean-forward="true" selection-start-line="73" selection-start-column="58" selection-end-line="73" selection-end-column="58" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1046,8 +998,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/sqlDesign/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="113" column="53" lean-forward="true" selection-start-line="113" selection-start-column="53" selection-end-line="113" selection-end-column="53" />
+        <state relative-caret-position="286">
+          <caret line="99" column="36" selection-start-line="99" selection-start-column="36" selection-end-line="99" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/sqlDesign/serviceImpl/ProductServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="396" column="105" selection-start-line="396" selection-start-column="105" selection-end-line="396" selection-end-column="105" />
+          <folding>
+            <element signature="method#init#0;class#ProductServiceImpl#0" />
+            <element signature="method#end#0;class#ProductServiceImpl#0" />
+            <element signature="method#getProducts#0;class#ProductServiceImpl#0" />
+            <element signature="method#changeConsumeOfCall#0;class#ProductServiceImpl#0" />
+          </folding>
         </state>
       </provider>
     </entry>

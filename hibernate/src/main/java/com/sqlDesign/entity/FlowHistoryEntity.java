@@ -23,13 +23,15 @@ public class FlowHistoryEntity {
     private double consumeOtherAll;
     //money是-1表示不是资费信息而是更新consume
     private Double money;
+    private Double moneyThisTime;
 
-    public FlowHistoryEntity(int cid, int month, double consumeLocalAll, double consumeOtherAll, double money) {
+    public FlowHistoryEntity(int cid, int month, double consumeLocalAll, double consumeOtherAll, double money, double moneyThisTime) {
         this.cid = cid;
         this.month = month;
         this.consumeLocalAll = consumeLocalAll;
         this.consumeOtherAll = consumeOtherAll;
         this.money = money;
+        this.moneyThisTime = moneyThisTime;
     }
 
     @Id
@@ -106,6 +108,7 @@ public class FlowHistoryEntity {
         if (Double.compare(that.consumeLocalAll, consumeLocalAll) != 0) return false;
         if (Double.compare(that.consumeOtherAll, consumeOtherAll) != 0) return false;
         if (money != null ? !money.equals(that.money) : that.money != null) return false;
+        if (moneyThisTime != null ? !moneyThisTime.equals(that.moneyThisTime) : that.moneyThisTime != null) return false;
 
         return true;
     }
@@ -122,6 +125,17 @@ public class FlowHistoryEntity {
         temp = Double.doubleToLongBits(consumeOtherAll);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (money != null ? money.hashCode() : 0);
+        result = 31 * result + (moneyThisTime != null ? moneyThisTime.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "money_this_time")
+    public Double getMoneyThisTime() {
+        return moneyThisTime;
+    }
+
+    public void setMoneyThisTime(Double moneyThisTime) {
+        this.moneyThisTime = moneyThisTime;
     }
 }

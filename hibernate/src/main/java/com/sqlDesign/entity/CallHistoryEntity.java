@@ -24,13 +24,15 @@ public class CallHistoryEntity {
     private Timestamp endTime;
     private double allTime;
     private Double money;
+    private Double moneyThisTime;
 
-    public CallHistoryEntity(int cid, Timestamp createdTime, Timestamp endTime, double allTime, double money) {
+    public CallHistoryEntity(int cid, Timestamp createdTime, Timestamp endTime, double allTime, double money, double moneyThisTime) {
         this.cid = cid;
         this.createdTime = createdTime;
         this.endTime = endTime;
         this.allTime = allTime;
         this.money = money;
+        this.moneyThisTime = moneyThisTime;
     }
 
     public CallHistoryEntity(int cid, double allTime) {
@@ -40,6 +42,7 @@ public class CallHistoryEntity {
         this.endTime = ts;
         this.allTime = allTime;
         this.money = 0.0;
+        this.moneyThisTime = 0.0;
     }
 
     @Id
@@ -116,6 +119,7 @@ public class CallHistoryEntity {
         if (createdTime != null ? !createdTime.equals(that.createdTime) : that.createdTime != null) return false;
         if (endTime != null ? !endTime.equals(that.endTime) : that.endTime != null) return false;
         if (money != null ? !money.equals(that.money) : that.money != null) return false;
+        if (moneyThisTime != null ? !moneyThisTime.equals(that.moneyThisTime) : that.moneyThisTime != null) return false;
 
         return true;
     }
@@ -131,6 +135,17 @@ public class CallHistoryEntity {
         temp = Double.doubleToLongBits(allTime);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (money != null ? money.hashCode() : 0);
+        result = 31 * result + (moneyThisTime != null ? moneyThisTime.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "money_this_time")
+    public Double getMoneyThisTime() {
+        return moneyThisTime;
+    }
+
+    public void setMoneyThisTime(Double moneyThisTime) {
+        this.moneyThisTime = moneyThisTime;
     }
 }

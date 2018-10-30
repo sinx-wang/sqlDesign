@@ -140,6 +140,7 @@ public class UserServiceImpl implements UserService {
         query1.setParameter("monthStart", ts);
         List<CallHistoryEntity> callList = ((org.hibernate.query.Query) query1).list();
 
+        double money_history = 0;
         long from = createdTime.getTime();
         long to = endTime.getTime();
         int minutes = (int)((to - from) / (1000 * 60));
@@ -149,16 +150,24 @@ public class UserServiceImpl implements UserService {
         } else {
             //以前的all_time + 现在的
             consume_time_all = callList.get(0).getAllTime() + minutes;
+            money_history = callList.get(0).getMoney();
         }
         //3. money为超出时长计费
+        // 单次计费：上次比这次小就减
         double surplus = free_time_all - consume_time_all;
         double money = 0;
+        double money_this_time = 0;
         if (surplus < 0) {
             //超出套餐部分
             money = -surplus * standard;
         }
+        if (money > money_history) {
+            money_this_time = money - money_history;
+        } else {
+            money_this_time = money;
+        }
 
-        CallHistoryEntity newHistory = new CallHistoryEntity(cid, createdTime, endTime, consume_time_all, money);
+        CallHistoryEntity newHistory = new CallHistoryEntity(cid, createdTime, endTime, consume_time_all, money, money_this_time);
         session.save(newHistory);
 
         end(true);
@@ -198,25 +207,35 @@ public class UserServiceImpl implements UserService {
         List<FlowHistoryEntity> flowList = ((org.hibernate.query.Query) query1).list();
         double consume_local_once = isLocal ? num : 0;
         double consume_other_once = isLocal ? 0 : num;
+        double money_history = 0;
         if (flowList.size() == 0) {
             consume_local_all = consume_local_once;
             consume_other_all = consume_other_once;
         } else {
             consume_local_all = flowList.get(0).getConsumeLocalAll() + consume_local_once;
             consume_other_all = flowList.get(0).getConsumeOtherAll() + consume_other_once;
+            if (flowList.get(0).getMoney() != -1) {
+                money_history = flowList.get(0).getMoney();
+            }
         }
 
         double surplus_local = free_local_all - consume_local_all;
         double surplus_other = free_other_all - consume_other_all;
         double money = 0;
+        double money_this_time;
         if (surplus_local < 0) {
             money = -surplus_local * local_standard;
         }
         if (surplus_other < 0) {
             money += -surplus_other * other_standard;
         }
+        if (money > money_history) {
+            money_this_time = money - money_history;
+        } else {
+            money_this_time = money;
+        }
 
-        FlowHistoryEntity flowHistoryEntity = new FlowHistoryEntity(cid, month, consume_local_all, consume_other_all, money);
+        FlowHistoryEntity flowHistoryEntity = new FlowHistoryEntity(cid, month, consume_local_all, consume_other_all, money, money_this_time);
         session.save(flowHistoryEntity);
 
         end(true);
@@ -251,18 +270,28 @@ public class UserServiceImpl implements UserService {
         query1.setParameter("cid", cid);
         query1.setParameter("month", month);
         List<SmsHistoryEntity> smsList = ((org.hibernate.query.Query) query1).list();
+        double money_history = 0;
         if (smsList.size() == 0) {
             consume_all = num;
         } else {
             consume_all = smsList.get(0).getSendNumAll() + num;
+            if (smsList.get(0).getMoney() != -1) {
+                money_history = smsList.get(0).getMoney();
+            }
         }
         double surplus = free_num - consume_all;
+        double money_this_time;
         double money = 0;
         if (surplus < 0) {
             money = -surplus * standard;
         }
+        if (money > money_history) {
+            money_this_time = money - money_history;
+        } else {
+            money_this_time = money;
+        }
 
-        SmsHistoryEntity smsHistoryEntity = new SmsHistoryEntity(cid, month, consume_all, money);
+        SmsHistoryEntity smsHistoryEntity = new SmsHistoryEntity(cid, month, consume_all, money, money_this_time);
         session.save(smsHistoryEntity);
 
         end(true);
@@ -312,9 +341,9 @@ public class UserServiceImpl implements UserService {
             if (!call.getCreatedTime().equals(call.getEndTime())) {
                 String callHistory = sdf.format(call.getCreatedTime()) + " -> "
                         + sdf.format(call.getEndTime()) + " "
-                        + String.valueOf(call.getMoney());
+                        + String.valueOf(call.getMoneyThisTime());
                 result.add(callHistory);
-                allMoney += call.getMoney();
+                allMoney += call.getMoneyThisTime();
             }
         }
 
@@ -325,8 +354,8 @@ public class UserServiceImpl implements UserService {
         List<SmsHistoryEntity> smss = ((org.hibernate.query.Query) query1).list();
         double allSmsMoney = 0;
         for (SmsHistoryEntity sms:smss) {
-            if (sms.getMoney() > 0) {
-                allSmsMoney += sms.getMoney();
+            if (sms.getMoneyThisTime() > 0) {
+                allSmsMoney += sms.getMoneyThisTime();
             }
         }
         result.add("messages: " + String.valueOf(allSmsMoney));
@@ -339,8 +368,8 @@ public class UserServiceImpl implements UserService {
         List<FlowHistoryEntity> flows = ((org.hibernate.query.Query) query2).list();
         double allFlowMoney = 0;
         for (FlowHistoryEntity flow:flows) {
-            if (flow.getMoney() > 0) {
-                allFlowMoney += flow.getMoney();
+            if (flow.getMoneyThisTime() > 0) {
+                allFlowMoney += flow.getMoneyThisTime();
             }
         }
         result.add("data: " + String.valueOf(allFlowMoney));

@@ -21,12 +21,14 @@ public class SmsHistoryEntity {
     private int month;
     private int sendNumAll;
     private Double money;
+    private Double moneyThisTime;
 
-    public SmsHistoryEntity(int cid, int month, int sendNumAll, double money) {
+    public SmsHistoryEntity(int cid, int month, int sendNumAll, double money, double moneyThisTime) {
         this.cid = cid;
         this.month = month;
         this.sendNumAll = sendNumAll;
         this.money = money;
+        this.moneyThisTime = moneyThisTime;
     }
 
     @Id
@@ -92,6 +94,7 @@ public class SmsHistoryEntity {
         if (month != that.month) return false;
         if (sendNumAll != that.sendNumAll) return false;
         if (money != null ? !money.equals(that.money) : that.money != null) return false;
+        if (moneyThisTime != null ? !moneyThisTime.equals(that.moneyThisTime) : that.moneyThisTime != null) return false;
 
         return true;
     }
@@ -103,6 +106,17 @@ public class SmsHistoryEntity {
         result = 31 * result + month;
         result = 31 * result + sendNumAll;
         result = 31 * result + (money != null ? money.hashCode() : 0);
+        result = 31 * result + (moneyThisTime != null ? moneyThisTime.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "money_this_time")
+    public Double getMoneyThisTime() {
+        return moneyThisTime;
+    }
+
+    public void setMoneyThisTime(Double moneyThisTime) {
+        this.moneyThisTime = moneyThisTime;
     }
 }

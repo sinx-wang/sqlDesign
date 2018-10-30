@@ -360,7 +360,7 @@ public class ProductServiceImpl implements ProductService {
                 if (consume_other > free_other_all) {
                     consume_other = free_other_all;
                 }
-                FlowHistoryEntity flowHistoryEntity = new FlowHistoryEntity(cid, month, consume_local, consume_other, -1);
+                FlowHistoryEntity flowHistoryEntity = new FlowHistoryEntity(cid, month, consume_local, consume_other, -1, -1);
                 session.save(flowHistoryEntity);
             }
         }
@@ -394,7 +394,7 @@ public class ProductServiceImpl implements ProductService {
             List<SmsHistoryEntity> smsList = ((org.hibernate.query.Query) query1).list();
             if (smsList.size() > 0) {
                 if (smsList.get(0).getSendNumAll() > free_num) {
-                    SmsHistoryEntity smsHistoryEntity = new SmsHistoryEntity(cid, month, free_num, -1);
+                    SmsHistoryEntity smsHistoryEntity = new SmsHistoryEntity(cid, month, free_num, -1, -1);
                     session.save(smsHistoryEntity);
                 }
             }
