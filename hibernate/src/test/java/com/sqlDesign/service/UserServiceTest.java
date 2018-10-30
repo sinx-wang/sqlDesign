@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -74,5 +75,51 @@ public class UserServiceTest {
         Timestamp tsEnd = new Timestamp(dateEnd.getTime());
         double chargeOfCall = userService.chargeOfCall(cid, tsStart, tsEnd);
         System.out.println(chargeOfCall);
+    }
+
+    @Test
+    public void testChargeOfFlow() {
+
+        userService = new UserServiceImpl();
+        int cid = 2;
+        System.out.println(userService.chargeOfFlow(cid, 2048, false));
+        System.out.println(userService.chargeOfFlow(cid, 2050, false));
+    }
+
+    @Test
+    public void testOrderNewFlow() {
+        userService = new UserServiceImpl();
+        productService = new ProductServiceImpl();
+        int cid = 2;
+        System.out.println(productService.orderProductNow(cid, 5));
+        System.out.println(userService.chargeOfFlow(cid, 2050, false));
+    }
+
+    @Test
+    public void testChargeOfSms() {
+        userService = new UserServiceImpl();
+        int cid = 2;
+        System.out.println(userService.chargeOfSms(cid, 40));
+        System.out.println(userService.chargeOfSms(cid, 50));
+        System.out.println(userService.chargeOfSms(cid, 15));
+    }
+
+    @Test
+    public void testOrderNewSms() {
+        userService = new UserServiceImpl();
+        productService = new ProductServiceImpl();
+        int cid = 2;
+        System.out.println(productService.orderProductNow(cid, 3));
+        System.out.println(userService.chargeOfSms(cid, 40));
+    }
+
+    @Test
+    public void testChargeOfMonth() {
+        int cid = 2;
+        userService = new UserServiceImpl();
+        ArrayList<String> user1List = userService.chargeOfMonth(cid, 10);
+        for (String string:user1List) {
+            System.out.println(string);
+        }
     }
 }

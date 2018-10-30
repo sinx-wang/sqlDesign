@@ -15,10 +15,17 @@ public class ProductServiceTest {
     private ProductService productService;
 
     @Test
+    public void testGetAll() {
+        productService = new ProductServiceImpl();
+        ArrayList<String> list = productService.queryPlanList();
+        list.forEach(System.out::println);
+    }
+
+    @Test
     public void testQueryAllProducts() {
         productService = new ProductServiceImpl();
         int cid = 1;
-        ArrayList<ProductEntity> productEntities = productService.queryAllProducts(cid);
+        ArrayList<ProductEntity> productEntities = productService.queryAllProducts(cid, 10);
         for (ProductEntity product:productEntities) {
             System.out.println(product.getPid() + " " + product.getPname());
         }
@@ -31,11 +38,11 @@ public class ProductServiceTest {
         int cid1 = 3;
         System.out.println(productService.orderProductNow(cid0, 2));
         System.out.println(productService.orderProductNow(cid1, 4));
-        ArrayList<ProductEntity> productList0 = productService.queryAllProducts(cid0);
+        ArrayList<ProductEntity> productList0 = productService.queryAllProducts(cid0, 10);
         for (ProductEntity product:productList0) {
             System.out.println(product.getPid() + " " + product.getPname());
         }
-        ArrayList<ProductEntity> productList1 = productService.queryAllProducts(cid1);
+        ArrayList<ProductEntity> productList1 = productService.queryAllProducts(cid1, 10);
         for (ProductEntity product:productList1) {
             System.out.println(product.getPid() + " " + product.getPname());
         }
@@ -53,7 +60,7 @@ public class ProductServiceTest {
         productService = new ProductServiceImpl();
         int cid0 = 2;
         System.out.println(productService.cancelProductNow(cid0, 2));
-        ArrayList<ProductEntity> productList0 = productService.queryAllProducts(cid0);
+        ArrayList<ProductEntity> productList0 = productService.queryAllProducts(cid0, 10);
         for (ProductEntity product:productList0) {
             System.out.println(product.getPid() + " " + product.getPname());
         }

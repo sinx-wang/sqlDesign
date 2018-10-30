@@ -188,8 +188,8 @@ public class UserServiceImpl implements UserService {
         double consume_other_all;
         double local_standard = session.get(FlowEntity.class, 1).getLocalStandard();
         double other_standard = session.get(FlowEntity.class, 1).getOtherStandard();
-        free_local_all = getFreeNum(planList, "free_local");
-        free_other_all = getFreeNum(planList, "free_other");
+        free_local_all = getFreeNum(planList, "flow_local");
+        free_other_all = getFreeNum(planList, "flow_other");
 
         String flowNumSql = "from FlowHistoryEntity where cid =: cid and month =: month order by fhid desc";
         Query query1 = session.createQuery(flowNumSql);
@@ -271,7 +271,6 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 月账单
-     * 不含基准费
      * @param cid   客户编号
      * @param month 月份
      * @return ArrayList<String>
@@ -280,30 +279,49 @@ public class UserServiceImpl implements UserService {
     @Override
     public ArrayList<String> chargeOfMonth(int cid, int month) {
         init(false);
+        double allMoney = 0;
         ArrayList<String> result = new ArrayList<>();
+        result.add("plans: ");
         List<Integer> planList = getPlanList(cid, month, 1);
         for (Integer pid:planList) {
             ProductEntity productEntity = session.get(ProductEntity.class, pid);
-            String planStr = productEntity.getPname() + " " + String.valueOf(productEntity.getBase());
+            String planStr = productEntity.getPname() + ": " + String.valueOf(productEntity.getBase());
             result.add(planStr);
+            allMoney += productEntity.getBase();
         }
+        result.add("out of plan: ");
+
+        Date date = new Date();
+        String timeStr = String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + "/" + String.valueOf(month) + "/1 00:00:01";
+        DateFormat sdf0 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        try {
+            date = sdf0.parse(timeStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Timestamp ts = new Timestamp(date.getTime());
 
         String callSql = "from CallHistoryEntity where cid =: cid and createdTime >=: monthStart order by createdTime desc";
         Query query = session.createQuery(callSql);
+        query.setParameter("cid", cid);
+        query.setParameter("monthStart", ts);
         List<CallHistoryEntity> calls = ((org.hibernate.query.Query) query).list();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         for (CallHistoryEntity call:calls) {
             //去掉新订购套餐记录
             if (!call.getCreatedTime().equals(call.getEndTime())) {
-                String callHistory = sdf.format(call.getCreatedTime()) + "->"
+                String callHistory = sdf.format(call.getCreatedTime()) + " -> "
                         + sdf.format(call.getEndTime()) + " "
                         + String.valueOf(call.getMoney());
                 result.add(callHistory);
+                allMoney += call.getMoney();
             }
         }
 
         String smsSql = "from SmsHistoryEntity where cid =: cid and month =: month order by shid desc";
         Query query1 = session.createQuery(smsSql);
+        query1.setParameter("cid", cid);
+        query1.setParameter("month", month);
         List<SmsHistoryEntity> smss = ((org.hibernate.query.Query) query1).list();
         double allSmsMoney = 0;
         for (SmsHistoryEntity sms:smss) {
@@ -312,9 +330,12 @@ public class UserServiceImpl implements UserService {
             }
         }
         result.add("messages: " + String.valueOf(allSmsMoney));
+        allMoney += allSmsMoney;
 
         String flowSql = "from FlowHistoryEntity where cid =: cid and month =: month order by fhid desc";
         Query query2 = session.createQuery(flowSql);
+        query2.setParameter("cid", cid);
+        query2.setParameter("month", month);
         List<FlowHistoryEntity> flows = ((org.hibernate.query.Query) query2).list();
         double allFlowMoney = 0;
         for (FlowHistoryEntity flow:flows) {
@@ -323,6 +344,8 @@ public class UserServiceImpl implements UserService {
             }
         }
         result.add("data: " + String.valueOf(allFlowMoney));
+        allMoney += allFlowMoney;
+        result.add("total: " + String.valueOf(allMoney));
         end(false);
         return result;
     }

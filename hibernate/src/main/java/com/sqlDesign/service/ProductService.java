@@ -12,13 +12,17 @@ import java.util.ArrayList;
  */
 public interface ProductService {
 
+
+    public ArrayList<String> queryPlanList();
+
     /**
      * 所有套餐的查询（包括历史记录）
      * @author Mr.Wang
      * @param cid 客户编号
+     * @param month 月份
      * @return ArrayList<ProductEntity>
      */
-    public ArrayList<ProductEntity> queryAllProducts(int cid);
+    public ArrayList<ProductEntity> queryAllProducts(int cid, int month);
 
     /**
      * 查询正在使用的套餐

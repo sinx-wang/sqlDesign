@@ -20,8 +20,6 @@ import java.util.List;
 /**
  * @author Mr.Wang
  * @version 2018/10/27
- * @program hibernate
- * @description
  */
 public class ProductServiceImpl implements ProductService {
 
@@ -49,32 +47,64 @@ public class ProductServiceImpl implements ProductService {
     private ArrayList<ProductEntity> getProducts(List<ProductHistoryEntity> list) {
         ArrayList<ProductEntity> products = new ArrayList<>();
         if (list.size() > 0) {
-            for(ProductHistoryEntity entity:list) {
-                int pid = entity.getPid();
-                //基本资费等于没有套餐
+            list.forEach(productHistoryEntity -> {
+                int pid = productHistoryEntity.getPid();
                 if (pid != 1) {
                     ProductEntity product = session.get(ProductEntity.class, pid);
                     products.add(product);
                 }
-            }
+            });
         }
         return products;
+    }
+
+    @Override
+    public ArrayList<String> queryPlanList() {
+        init(false);
+        String relationSql = "from ProductEntity";
+        Query query = session.createQuery(relationSql);
+        ArrayList<String> result = new ArrayList<>();
+        List<ProductEntity> products = ((org.hibernate.query.Query) query).list();
+        products.forEach( p -> {
+            if (p.getPid() != 1) {
+                String productStr = p.getPname() + "\n";
+                if (p.getCallId() != 1) {
+                    double callFree = session.get(CallEntity.class, p.getCallId()).getFreeTime();
+                    productStr = "call free time: " + String.valueOf(callFree) + "\n";
+                }
+                if (p.getFlowId() != 1) {
+                    double local_data_free = session.get(FlowEntity.class, p.getFlowId()).getLocalFreeNum();
+                    double all_country_data_free = session.get(FlowEntity.class, p.getFlowId()).getOtherFreeNum();
+                    productStr += "local data free: " + String.valueOf(local_data_free) + " country data free: " + String.valueOf(all_country_data_free) + "\n";
+                }
+                if (p.getSmsId() != 1) {
+                    int smsFree = session.get(SmsEntity.class, p.getSmsId()).getFreeNum();
+                    productStr += "messages free: " + String.valueOf(smsFree) + "\n";
+                }
+                result.add(productStr);
+            }
+        });
+
+        end(false);
+        return result;
     }
 
     /**
      * 套餐的查询（包括历史记录）
      * @param cid 客户编号
+     * @param month 月份
      * @return ArrayList<ProductEntity>
      * @author Mr.Wang
      */
     @Override
-    public ArrayList<ProductEntity> queryAllProducts(int cid) {
+    public ArrayList<ProductEntity> queryAllProducts(int cid, int month) {
         init(false);
 
         //根据时间由近到远查询用户订购过的套餐
-        String relationSql = "from ProductHistoryEntity where cid =: cid order by phid desc";
+        String relationSql = "from ProductHistoryEntity where cid =: cid and month =: month order by phid desc";
         Query query = session.createQuery(relationSql);
         query.setParameter("cid", cid);
+        query.setParameter("month", month);
         List<ProductHistoryEntity> list = ((org.hibernate.query.Query) query).list();
         ArrayList<ProductEntity> products = getProducts(list);
         end(false);
@@ -92,9 +122,11 @@ public class ProductServiceImpl implements ProductService {
     public ArrayList<ProductEntity> queryUsingProducts(int cid) {
         init(false);
 
-        String relationSql = "from ProductHistoryEntity where cid =: cid and beUsing = 1 order by phid desc";
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+        String relationSql = "from ProductHistoryEntity where cid =: cid and beUsing = 1 and month =: month order by phid desc";
         Query query = session.createQuery(relationSql);
         query.setParameter("cid", cid);
+        query.setParameter("month", month);
         List<ProductHistoryEntity> list = ((org.hibernate.query.Query) query).list();
         ArrayList<ProductEntity> products = getProducts(list);
 
@@ -113,20 +145,21 @@ public class ProductServiceImpl implements ProductService {
     public ArrayList<ProductEntity> queryNextProducts(int cid) {
         init(false);
 
-        String relationSql = "from ProductHistoryEntity where cid =: cid and beUsing = 1 order by phid desc";
+        int month = Calendar.getInstance().get(Calendar.MONTH);
+        String relationSql = "from ProductHistoryEntity where cid =: cid and beUsing = 1 and month =: month order by phid desc";
         Query query = session.createQuery(relationSql);
         query.setParameter("cid", cid);
+        query.setParameter("month", month);
         List<ProductHistoryEntity> list = ((org.hibernate.query.Query) query).list();
         ArrayList<ProductEntity> products = new ArrayList<>();
         if (list.size() > 0) {
-            for(ProductHistoryEntity entity:list) {
-                int nextPid = entity.getpNextId();
-                //基本资费等于没有套餐
+            list.forEach(productHistoryEntity -> {
+                int nextPid = productHistoryEntity.getpNextId();
                 if (nextPid != 1) {
                     ProductEntity product = session.get(ProductEntity.class, nextPid);
                     products.add(product);
                 }
-            }
+            });
         }
 
         end(false);
@@ -199,9 +232,10 @@ public class ProductServiceImpl implements ProductService {
 
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH) + 1;
-        String relationSql = "update ProductHistoryEntity p set p.beUsing =: now where p.cid =: cid and p.pid =: pid and p.month =: month and p.beUsing =: beUsing";
+        String relationSql = "update ProductHistoryEntity p set p.beUsing =: now, p.pNextId =: next where p.cid =: cid and p.pid =: pid and p.month =: month and p.beUsing =: beUsing";
         Query query = session.createQuery(relationSql);
         query.setParameter("now", 0);
+        query.setParameter("next", 1);
         query.setParameter("cid", cid);
         query.setParameter("pid", pid);
         query.setParameter("month", month);
